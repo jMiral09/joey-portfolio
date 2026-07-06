@@ -3,7 +3,7 @@ import profilePic from "./assets/aboutme_profile.jpg";
 import {
   Facebook,
   Linkedin,
-  Globe2,
+  Instagram,
   Mail,
   ArrowUpRight,
   Sun,
@@ -389,14 +389,16 @@ export default function JoeyPortfolio() {
       >
         <div className="flex items-center gap-5">
           {[
-            { Icon: Facebook, href: "#" },
-            { Icon: Linkedin, href: "#" },
-            { Icon: Globe2, href: "#" },
+            { Icon: Facebook, href: "https://www.facebook.com/miraljoey/" },
+            { Icon: Linkedin, href: "https://www.linkedin.com/in/joey-miral-06a89724a/" },
+            { Icon: Instagram, href: "https://www.instagram.com/yeoj.mp3/" },
             { Icon: Mail, href: "mailto:miraljoey291@gmail.com" },
           ].map(({ Icon, href }, i) => (
             <a
               key={i}
               href={href}
+              target={href.startsWith("mailto:") ? undefined : "_blank"}
+              rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
               className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-75 transition-opacity"
               style={{ background: PAPER }}
             >
