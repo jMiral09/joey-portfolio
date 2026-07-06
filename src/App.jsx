@@ -11,10 +11,6 @@ import {
   EyeOff,
 } from "lucide-react";
 
-// ---- State for hover effect on projects ----
-const [hovered, setHovered] = useState(null);
-const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
 // ---- Design tokens (from the Figma wireframe) ----
 const LIME = "#D6FE4E";
 const INK = "#111111";
@@ -66,6 +62,11 @@ const projects = [
 ];
 
 export default function JoeyPortfolio() {
+    // ---- State for hover effect on projects ----
+  const [hovered, setHovered] = useState(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  
   const [dark, setDark] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
