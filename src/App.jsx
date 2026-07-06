@@ -11,6 +11,10 @@ import {
   EyeOff,
 } from "lucide-react";
 
+// ---- State for hover effect on projects ----
+const [hovered, setHovered] = useState(null);
+const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
 // ---- Design tokens (from the Figma wireframe) ----
 const LIME = "#D6FE4E";
 const INK = "#111111";
@@ -43,21 +47,21 @@ const projects = [
     tag: "Mobile App",
     copy: "A mobile UI design for plant care and gardening, guiding users through plant tracking and care reminders with a clean, nature-inspired interface.",
     link: "https://www.behance.net/gallery/179128031/Planti-Tao-Mobile-App-UI-Design",
-    preview: "public/images/planti_tao_banner.png",
+    preview: "/images/planti_tao_banner.png",
   },
   {
     name: "Gym Client Management",
     tag: "Web App",
     copy: "A desktop and mobile UI system for gym staff to manage client records, memberships, and schedules in one streamlined dashboard.",
     link: "https://www.behance.net/gallery/177503849/UI-Design-Gym-Client-Page-for-Desktop-and-Mobile-View",
-    preview: "public/images/gymmanagement_banner.jpg",
+    preview: "/images/gymmanagement_banner.jpg",
   },
   {
     name: "CM Shop",
     tag: "E-Commerce",
     copy: "An e-commerce website UI design focused on smooth browsing and checkout, built to showcase products with a modern, minimal storefront layout.",
     link: "https://www.behance.net/gallery/177505945/UI-Design-CM-Shop-E-Commerce-Website",
-    preview: "public/images/cmshop_banner.png",
+    preview: "/images/cmshop_banner.png",
   },
 ];
 
@@ -72,14 +76,37 @@ export default function JoeyPortfolio() {
   const border = dark ? "#3A3A3A" : INK;
   const placeholderBg = dark ? "#2A2A2A" : GRAY;
 
-  const handleSubmit = (e) => {
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
+    setSending(true);
+    setError(false);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (response.ok) {
+        setSent(true);
+        setForm({ name: "", email: "", message: "" });
+        setTimeout(() => setSent(false), 3000);
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
-  const [hovered, setHovered] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
 
   return (
     <div
@@ -337,10 +364,11 @@ export default function JoeyPortfolio() {
             </label>
             <button
               type="submit"
+              disabled={sending}
               className="mt-2 py-3 font-bold text-sm uppercase tracking-wide transition-opacity hover:opacity-85"
-              style={{ background: text, color: bg }}
+              style={{ background: text, color: bg, opacity: sending ? 0.6 : 1 }}
             >
-              {sent ? "Message sent!" : "Submit"}
+              {sending ? "Sending..." : sent ? "Message sent!" : error ? "Failed — try again" : "Submit"}
             </button>
           </form>
 
