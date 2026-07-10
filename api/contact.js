@@ -3,10 +3,27 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { name, email, message } = req.body;
+  const { name, email, message } = req.body ?? {};
 
-  if (!name || !email || !message) {
+  if (typeof name !== "string" || typeof email !== "string" || typeof message !== "string") {
     return res.status(400).json({ error: "Missing fields" });
+  }
+
+  const cleanName = name.trim();
+  const cleanEmail = email.trim();
+  const cleanMessage = message.trim();
+
+  if (!cleanName || !cleanEmail || !cleanMessage || !/^\S+@\S+\.\S+$/.test(cleanEmail)) {
+    return res.status(400).json({ error: "Please provide a valid name, email, and message" });
+  }
+
+  if (cleanName.length > 100 || cleanEmail.length > 254 || cleanMessage.length > 5000) {
+    return res.status(400).json({ error: "One or more fields are too long" });
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is not configured");
+    return res.status(500).json({ error: "Email service is not configured" });
   }
 
   try {
@@ -19,9 +36,9 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: "Portfolio Contact <onboarding@resend.dev>",
         to: "miraljoey291@gmail.com",
-        reply_to: email,
-        subject: `New inquiry from ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+        reply_to: cleanEmail,
+        subject: `New inquiry from ${cleanName}`,
+        text: `Name: ${cleanName}\nEmail: ${cleanEmail}\n\nMessage:\n${cleanMessage}`,
       }),
     });
 

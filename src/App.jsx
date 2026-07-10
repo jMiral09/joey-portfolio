@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import profilePic from "./assets/aboutme_profile.jpg";
 import {
   Facebook,
@@ -6,34 +6,34 @@ import {
   Instagram,
   Mail,
   ArrowUpRight,
-  Sun,
-  Moon,
-  EyeOff,
+  Menu,
+  X,
 } from "lucide-react";
 
-// ---- Design tokens (from the Figma wireframe) ----
-const LIME = "#D6FE4E";
-const INK = "#111111";
-const INK_SOFT = "#3A3A3A";
+// ---- Design tokens: single teal theme ----
+const TEAL = "#34806D";        // primary background
+const TEAL_DARK = "#256054";   // slightly darker teal for menu dropdown
 const PAPER = "#FFFFFF";
-const PAPER_DARK = "#141414";
-const CARD_DARK = "#1D1D1D";
-const GRAY = "#E4E4E4";
+const INK = "#1A1A1A";
+const ROSE = "#E894A8";
+const YELLOW = "#F2E9A8";
+const TEXT_LIGHT = "#F6FBFA";
+const TEXT_MUTED = "#CFE3DC";
 
-const nav = ["About", "Skills", "Projects", "Contact"];
+const nav = ["About", "Experience", "Skills", "Projects", "Contact"];
 
 const skills = [
   {
-    title: "UI / UX Designing",
-    copy: "Wireframes, prototypes and interfaces designed in Figma — from a gym-management app to product mockups, built around how people actually use them.",
+    title: "UI/UX Design",
+    items: ["Figma", "Wireframing", "Prototyping", "Design Systems"],
   },
   {
-    title: "Software Development",
-    copy: "Java backend work with Spring Boot and REST APIs, plus hands-on frontend builds — connecting a clean interface to logic that actually holds up.",
+    title: "Frontend",
+    items: ["React", "Next.js", "TailwindCSS", "JavaScript"],
   },
   {
-    title: "Database Designing",
-    copy: "Schema design and SQL for MySQL and PostgreSQL, with production ETL/batch-processing experience keeping real financial data moving.",
+    title: "Database",
+    items: ["MySQL", "PostgreSQL", "SQL Server"],
   },
 ];
 
@@ -41,44 +41,63 @@ const projects = [
   {
     name: "Planti-Tao",
     tag: "Mobile App",
-    copy: "A mobile UI design for plant care and gardening, guiding users through plant tracking and care reminders with a clean, nature-inspired interface.",
-    link: "https://www.behance.net/gallery/179128031/Planti-Tao-Mobile-App-UI-Design",
+    tech: ["Figma", "UI Design", "Prototype"],
+    copy:
+      "A 15-screen mobile UI design for plant care and gardening — covering onboarding, plant tracking, and care reminders — built around a clean, nature-inspired interface that keeps day-to-day plant care simple.",
+    link:
+      "https://www.behance.net/gallery/179128031/Planti-Tao-Mobile-App-UI-Design",
     preview: "/images/planti_tao_banner.png",
-  },
-  {
-    name: "Gym Client Management",
-    tag: "Web App",
-    copy: "A desktop and mobile UI system for gym staff to manage client records, memberships, and schedules in one streamlined dashboard.",
-    link: "https://www.behance.net/gallery/177503849/UI-Design-Gym-Client-Page-for-Desktop-and-Mobile-View",
-    preview: "/images/gymmanagement_banner.jpg",
   },
   {
     name: "CM Shop",
     tag: "E-Commerce",
-    copy: "An e-commerce website UI design focused on smooth browsing and checkout, built to showcase products with a modern, minimal storefront layout.",
-    link: "https://www.behance.net/gallery/177505945/UI-Design-CM-Shop-E-Commerce-Website",
+    tech: ["Figma", "E-Commerce", "Responsive Design"],
+    copy:
+      "An e-commerce UI design featuring a redesigned checkout flow, built to showcase products with a modern, minimal storefront layout.",
+    link:
+      "https://www.behance.net/gallery/177505945/UI-Design-CM-Shop-E-Commerce-Website",
     preview: "/images/cmshop_banner.png",
+  },
+  {
+    name: "Social Platform Backend API",
+    tag: "Backend Development",
+    tech: ["Backend API", "Personal Project", "GitLab"],
+    copy:
+      "A personal backend project for a social-platform clone, created to practice building the server-side foundation behind user-driven web experiences.",
+    link: "https://gitlab.com/users/xiaoyi09/projects",
+    cta: "View Source",
+  },
+];
+
+const musicLinks = [
+  {
+    label: "Spotify",
+    href: "https://open.spotify.com/artist/6JfjpVf4qMV9Mnri2HzL4p?si=jXsR3-pfQj2CzE13Kctizg",
+  },
+  {
+    label: "Apple Music",
+    href: "https://music.apple.com/ph/artist/joey/1831241307",
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@joeyofficial09",
   },
 ];
 
 export default function JoeyPortfolio() {
-    // ---- State for hover effect on projects ----
-  const [hovered, setHovered] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  
-  const [dark, setDark] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
-
-  const bg = dark ? PAPER_DARK : PAPER;
-  const text = dark ? PAPER : INK;
-  const card = dark ? CARD_DARK : PAPER;
-  const border = dark ? "#3A3A3A" : INK;
-  const placeholderBg = dark ? "#2A2A2A" : GRAY;
-
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const updateNavigation = () => setScrolled(window.scrollY > 24);
+    updateNavigation();
+    window.addEventListener("scroll", updateNavigation, { passive: true });
+    return () => window.removeEventListener("scroll", updateNavigation);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,153 +126,394 @@ export default function JoeyPortfolio() {
     }
   };
 
-  
-
   return (
     <div
-      style={{ background: bg, color: text, minHeight: "100vh" }}
-      className="w-full font-sans transition-colors duration-300"
+      style={{ background: TEAL, color: TEXT_LIGHT, minHeight: "100vh" }}
+      className="relative w-full overflow-hidden font-sans"
     >
+      <div aria-hidden="true" className="hero-glow hero-glow-rose" />
+      <div aria-hidden="true" className="hero-glow hero-glow-yellow" />
       {/* NAV */}
-      <header className="flex items-center justify-between px-6 md:px-16 py-6">
-        <div className="flex items-center gap-2">
-          <div
-            className="w-8 h-8 flex items-center justify-center font-black text-lg"
-            style={{ border: `2px solid ${text}` }}
-          >
-            J
-          </div>
-        </div>
-        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide">
+      <header
+        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 md:px-16 transition-all duration-300"
+        style={scrolled ? {
+          background: "rgba(37, 96, 84, 0.82)",
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
+          borderBottom: "1px solid rgba(246, 251, 250, 0.18)",
+          boxShadow: "0 8px 28px rgba(15, 53, 45, 0.16)",
+        } : undefined}
+      >
+        <a
+          href="#top"
+          aria-label="Back to top"
+          className="font-bold tracking-[0.25em] text-sm"
+          style={{ color: TEXT_LIGHT }}
+        >
+          JM.
+        </a>
+        <nav className="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-[0.16em]" aria-label="Main navigation">
           {nav.map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="hover:opacity-60 transition-opacity"
+              className="nav-link"
+              style={{ color: TEXT_LIGHT }}
             >
               {item}
             </a>
           ))}
         </nav>
         <button
-          onClick={() => setDark(!dark)}
-          aria-label="Toggle dark mode"
-          className="w-14 h-8 rounded-full flex items-center px-1 transition-colors"
-          style={{
-            background: dark ? "#2A2A2A" : "#EDEDED",
-            border: `1px solid ${border}`,
-            justifyContent: dark ? "flex-end" : "flex-start",
-          }}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation"
+          className="w-10 h-10 flex md:hidden items-center justify-center"
+          style={{ color: TEXT_LIGHT }}
         >
-          <span
-            className="w-6 h-6 rounded-full flex items-center justify-center"
-            style={{ background: LIME }}
-          >
-            {dark ? (
-              <Moon size={13} color={INK} />
-            ) : (
-              <Sun size={13} color={INK} />
-            )}
-          </span>
+          {menuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
+
+        {menuOpen && (
+          <nav
+            id="site-navigation"
+            className="absolute top-[4.5rem] right-6 flex flex-col gap-1 rounded-2xl border px-5 py-3 shadow-xl md:hidden"
+            style={{
+              background: "rgba(37, 96, 84, 0.88)",
+              borderColor: "rgba(246, 251, 250, 0.18)",
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
+            }}
+          >
+            {nav.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={() => setMenuOpen(false)}
+                className="py-2 text-sm font-semibold tracking-wide hover:opacity-70 transition-opacity"
+                style={{ color: TEXT_LIGHT }}
+              >
+                {item}
+              </a>
+            ))}
+          </nav>
+        )}
       </header>
 
       {/* HERO */}
-      <section className="px-6 md:px-16 pt-10 md:pt-16 pb-16">
-        <div
-          className="inline-block px-5 py-2 rounded-full font-bold text-sm md:text-base mb-6"
-          style={{ background: text, color: bg }}
-        >
-          Hi! My name is
+      <section id="top" className="relative px-6 pb-20 pt-36 md:px-16 md:pb-20 md:pt-40 min-h-[80vh] flex items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center w-full">
+
+          <div>
+            <p
+              className="mb-3 uppercase tracking-[4px] text-sm"
+              style={{ color: TEXT_MUTED }}
+            >
+              Independent portfolio · 2026
+            </p>
+
+            <h1
+              className="text-5xl sm:text-6xl md:text-8xl leading-none"
+              style={{
+                fontFamily: "'TheQuicky', sans-serif",
+                color: ROSE,
+              }}
+            >
+              Joey Miral
+            </h1>
+
+            <p
+              className="mt-6 max-w-xl text-lg leading-relaxed"
+              style={{ color: TEXT_MUTED }}
+            >
+              UI/UX designer and frontend developer designing clear interfaces,
+              reliable systems, and thoughtful digital experiences.
+            </p>
+
+            <div className="flex gap-4 mt-8 flex-wrap">
+              <a
+                href="#projects"
+                className="hero-primary px-6 py-3 rounded-full font-semibold"
+                style={{
+                  background: YELLOW,
+                  color: INK,
+                }}
+              >
+                View Projects
+              </a>
+              <a
+              
+                href="/JoeyMiral_Resume.pdf"
+                download
+                className="hero-secondary px-6 py-3 rounded-full border"
+                style={{
+                  borderColor: TEXT_LIGHT,
+                  color: TEXT_LIGHT,
+                }}
+              >
+                Download Resume
+              </a>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
+            <img
+              src={profilePic}
+              alt="Joey Miral"
+              className="w-full max-w-[380px] aspect-[19/25] object-cover rounded-[28px]"
+            />
+          </div>
+
         </div>
-        <h1 className="text-5xl md:text-8xl font-black tracking-tight leading-none uppercase">
-          Joey Miral
-        </h1>
+      </section>
 
-        <p className="mt-6 max-w-xl text-sm md:text-base" style={{ color: dark ? "#B5B5B5" : INK_SOFT }}>
-          Cum Laude BS Information Technology graduate from TUP, building at the
-          intersection of clean interfaces, solid backend logic, and well-structured data.
-        </p>
+      {/* Featured Projects */}
+      <section className="px-6 md:px-16 py-24">
 
-        <div className="flex flex-wrap items-center gap-6 md:gap-10 mt-10 md:mt-16">
-          <span
-            className="text-2xl md:text-4xl font-black italic uppercase"
-            style={{
-              color: "transparent",
-              WebkitTextStroke: `1.5px ${LIME}`,
-            }}
+        <div className="mb-12">
+          <p
+            className="uppercase tracking-[4px]"
+            style={{ color: YELLOW }}
           >
-            UI/UX Designer
-          </span>
-          <span
-            className="text-2xl md:text-4xl font-black italic uppercase"
-            style={{
-              color: "transparent",
-              WebkitTextStroke: `1.5px ${LIME}`,
-            }}
+            Featured case study
+          </p>
+
+          <h2
+            className="text-5xl font-black mt-2"
+            style={{ color: TEXT_LIGHT }}
           >
-            Software Developer
-          </span>
+            G-Active
+          </h2>
+
+          <p
+            className="max-w-2xl mt-4"
+            style={{ color: TEXT_MUTED }}
+          >
+            A cloud-based gym management system, designed and developed as my capstone project.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+
+          <div
+            className="min-h-[280px] rounded-[30px] p-8 flex flex-col justify-end"
+            style={{ background: TEAL_DARK }}
+          >
+            <p className="text-sm uppercase tracking-[3px]" style={{ color: YELLOW }}>
+              G-Active · 2024
+            </p>
+            <p className="mt-3 max-w-md text-lg leading-relaxed" style={{ color: TEXT_LIGHT }}>
+              Turning fragmented client, membership, and schedule information into one focused workspace for gym teams.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <a
+                href="https://www.figma.com/community/file/1212404815375242369/gym-client-based-website-and-gym-management-system-ui-design"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-semibold underline underline-offset-4 transition-opacity hover:opacity-75"
+                style={{ color: TEXT_LIGHT }}
+              >
+                View G-Active Design in Figma
+                <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+              <a
+                href="#contact"
+                className="font-semibold transition-opacity hover:opacity-75"
+                style={{ color: TEXT_MUTED }}
+              >
+                Ask me about the project
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: YELLOW }}>My contribution</p>
+                <p className="mt-3 leading-relaxed" style={{ color: TEXT_MUTED }}>
+                  Project lead, UI/UX designer, and frontend developer—guiding the experience from system flow to interface implementation.
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: YELLOW }}>Designed for</p>
+                <p className="mt-3 leading-relaxed" style={{ color: TEXT_MUTED }}>
+                  Designed for 3 distinct user roles — admin, staff, and member — each with a tailored dashboard for fast access to records, memberships, and operational data without added complexity.
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] mt-9" style={{ color: YELLOW }}>Built with</p>
+
+            <div className="flex flex-wrap gap-3 mt-4">
+              {["CodeIgniter", "AJAX", "ChartJS", "MySQL", "Figma"].map((tech) => (
+                <span
+                  key={tech}
+                  className="px-4 py-2 rounded-full"
+                  style={{ border: `1px solid ${TEXT_LIGHT}` }}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+
         </div>
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="px-6 md:px-16 pb-20">
-        <div
-          className="grid md:grid-cols-[280px_1fr] gap-0"
-          style={{ border: `2px solid ${border}` }}
-        >
-          <div className="p-6 md:border-r-2" style={{ borderColor: border }}>
-            <h2 className="text-3xl font-black uppercase">
-              About<span style={{ color: LIME, WebkitTextStroke: `1px ${border}` }}>me</span>
-            </h2>
-            <div className="w-16 h-0.5 my-4" style={{ background: text }} />
-            <div
-              className="w-full aspect-square flex items-center justify-center text-xs uppercase tracking-widest font-semibold"
-              style={{ background: placeholderBg, color: dark ? "#888" : "#999" }}
-            >
-              <img src={profilePic} alt="Joey Miral" className="w-full aspect-square object-cover" style={{ border: `1px solid ${border}` }}/>
+      <section id="about" className="px-6 md:px-16 py-24">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+
+          <div
+            className="rounded-[28px] p-8 md:p-10 flex flex-col justify-between min-h-[300px]"
+            style={{ background: TEAL_DARK }}
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: YELLOW }}>
+              A quick introduction
+            </p>
+            <div className="space-y-5">
+              <div>
+                <p className="text-2xl font-bold" style={{ color: TEXT_LIGHT }}>BSIT, Cum Laude</p>
+                <p className="mt-1" style={{ color: TEXT_MUTED }}>Technological University of the Philippines</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold" style={{ color: TEXT_LIGHT }}>UI/UX + Frontend</p>
+                <p className="mt-1" style={{ color: TEXT_MUTED }}>Interface design grounded in systems thinking</p>
+              </div>
             </div>
           </div>
-          <div className="p-6 md:p-10 flex flex-col justify-center gap-4 text-sm md:text-base leading-relaxed">
-            <p>
-              I'm a recent Cum Laude graduate (GWA 1.497) from the Technological
-              University of the Philippines, based in Metro Manila. My background
-              spans IT operations and ETL/batch processing at Metrobank, Java
-              backend development with Spring Boot and REST APIs at ScoutStaff
-              Inc., and database design at 4Gives Finance.
+
+          <div>
+            <h2
+              className="text-5xl font-black"
+              style={{ color: TEXT_LIGHT }}
+            >
+              About Me
+            </h2>
+
+            <p
+              className="mt-6 leading-relaxed"
+              style={{ color: TEXT_MUTED }}
+            >
+              I'm Joey Miral, a Cum Laude BSIT graduate
+              from TUP with experience in IT Operations,
+              Java Development, Database Design, and UI/UX.
             </p>
-            <p>
-              Alongside the technical work, I designed a full cloud-based Gym
-              Management System as my capstone — my way into UI/UX. Outside of
-              tech, I write and produce music as an independent artist and lead
-              the San Gregorio Boys Choir as Choirmaster, so structure and
-              craft show up in everything I build, on screen or off.
+
+            <p
+              className="mt-4 leading-relaxed"
+              style={{ color: TEXT_MUTED }}
+            >
+              Most recently, I supported mission-critical banking
+              operations at Metrobank while continuing to build
+              digital products and user-centered experiences.
             </p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* BEYOND THE SCREEN */}
+      <section className="px-6 md:px-16 py-24">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          <img
+            src="/images/beyond-screen.jpg"
+            alt="Joey creating music in his home studio"
+            loading="lazy"
+            className="w-full aspect-[3/2] object-cover rounded-[28px]"
+          />
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: YELLOW }}>
+              Beyond the screen
+            </p>
+            <h2 className="mt-3 text-4xl md:text-5xl font-black" style={{ color: TEXT_LIGHT }}>
+              I create music, too.
+            </h2>
+            <p className="mt-6 max-w-xl leading-relaxed" style={{ color: TEXT_MUTED }}>
+              Outside product and interface work, I create music. It is another space where I explore rhythm, emotion, and detail—ideas that also shape how I approach digital experiences.
+            </p>
+            <p className="mt-5 text-sm font-semibold uppercase tracking-[0.14em]" style={{ color: ROSE }}>
+              Creative practice · Music
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {musicLinks.map((platform) => (
+                <a
+                  key={platform.label}
+                  href={platform.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:opacity-85"
+                  style={{ borderColor: TEXT_LIGHT, color: TEXT_LIGHT }}
+                >
+                  Listen on {platform.label}
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* EXPERIENCE */}
+      <section id="experience" className="px-6 md:px-16 py-24">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Selected experience</p>
+        <h2
+          className="text-5xl font-black mb-12"
+          style={{ color: TEXT_LIGHT }}
+        >
+          Experience
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-5">
+          <div className="border-t pt-5" style={{ borderColor: TEXT_MUTED }}>
+            <h3 className="text-2xl font-bold">Metropolitan Bank & Trust Company</h3>
+            <p style={{ color: TEXT_MUTED }}>Computer Operator • 2024 - June 2026</p>
+          </div>
+
+          <div className="border-t pt-5" style={{ borderColor: TEXT_MUTED }}>
+            <h3 className="text-2xl font-bold">ScoutStaff Inc.</h3>
+            <p style={{ color: TEXT_MUTED }}>Java Development Engineer • 2023 - 2024</p>
+          </div>
+
+          <div className="border-t pt-5" style={{ borderColor: TEXT_MUTED }}>
+            <h3 className="text-2xl font-bold">4Gives Finance</h3>
+            <p style={{ color: TEXT_MUTED }}>Database Designer Intern</p>
           </div>
         </div>
       </section>
 
       {/* SKILLS */}
       <section id="skills" className="px-6 md:px-16 pb-20">
-        <h2 className="text-4xl md:text-5xl font-black uppercase">Skills</h2>
-        <p
-          className="max-w-2xl mt-3 text-sm md:text-base"
-          style={{ color: dark ? "#8FA6D6" : "#3B5BA5" }}
-        >
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Capabilities</p>
+        <h2 className="text-4xl md:text-5xl font-black uppercase" style={{ color: TEXT_LIGHT }}>
+          Skills
+        </h2>
+        <p className="max-w-2xl mt-3 text-sm md:text-base" style={{ color: TEXT_MUTED }}>
           Three disciplines I move between depending on what a project needs —
           from the interface down to the schema underneath it.
         </p>
 
         <div className="grid md:grid-cols-3 gap-5 mt-8">
-          {skills.map((s) => (
+          {skills.map((skill) => (
             <div
-              key={s.title}
-              className="p-6 flex flex-col justify-between min-h-[220px]"
-              style={{ border: `2px solid ${border}`, borderRadius: "0 24px 0 24px" }}
+              key={skill.title}
+              className="p-6 rounded-[28px]"
+              style={{ border: `2px solid ${TEXT_LIGHT}` }}
             >
-              <p className="text-sm leading-relaxed opacity-80">{s.copy}</p>
-              <h3 className="text-xl md:text-2xl font-black mt-6">{s.title}</h3>
+              <h3
+                className="text-2xl font-bold mb-6"
+                style={{ color: TEXT_LIGHT }}
+              >
+                {skill.title}
+              </h3>
+
+              <ul className="space-y-3" style={{ color: TEXT_MUTED }}>
+                {skill.items.map((item) => (
+                  <li key={item}>• {item}</li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
@@ -261,131 +521,175 @@ export default function JoeyPortfolio() {
 
       {/* PROJECTS */}
       <section id="projects" className="pb-4">
-        <div className="text-center px-6">
-          <h2 className="text-4xl md:text-5xl font-black uppercase">Projects</h2>
-          <p className="text-sm md:text-base mt-2 opacity-70">
-            UI Designs | Capstone | Behance
+        <div className="px-6 md:px-16 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Selected work · 2023—2026</p>
+            <h2 className="text-4xl md:text-5xl font-black uppercase" style={{ color: TEXT_LIGHT }}>
+              Projects
+            </h2>
+          </div>
+          <p className="text-sm md:text-base mt-2 opacity-70" style={{ color: TEXT_MUTED }}>
+            UI design, product thinking, and frontend craft.
           </p>
         </div>
         <div className="relative">
-          <div
-            className="grid md:grid-cols-3 mt-10"
-            style={{ borderTop: `2px solid ${border}`, borderBottom: `2px solid ${border}` }}
-          >
-            {projects.map((p, i) => (
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12 px-6 md:px-16">
+            {projects.map((p) => (
               <a
                 key={p.name}
                 href={p.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={() => setHovered(p.name)}
-                onMouseLeave={() => setHovered(null)}
-                onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
-                className="p-8 flex flex-col justify-between min-h-[280px] group"
-                style={{
-                  borderRight: i < 2 ? `2px solid ${border}` : "none",
-                  borderTop: i > 0 ? `2px solid ${border}` : "none",
-                }}
+                className="h-full flex flex-col overflow-hidden rounded-[20px] bg-white group cursor-pointer transition-all duration-300 hover:-translate-y-2"
+                style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
               >
-                <div className="flex justify-between items-start">
+                {p.preview ? (
+                  <div className="overflow-hidden">
+                    <img
+                      src={p.preview}
+                      alt={p.name}
+                      loading="lazy"
+                      className="w-full h-[260px] object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="h-[260px] p-6 flex flex-col justify-between"
+                    style={{ background: TEAL_DARK, color: TEXT_LIGHT }}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: YELLOW }}>
+                      Code project
+                    </p>
+                    <p className="max-w-[14rem] text-3xl font-black leading-tight">
+                      Building the logic behind social experiences.
+                    </p>
+                  </div>
+                )}
+
+                <div className="p-6 flex flex-col flex-1">
                   <span
-                    className="text-xs font-bold uppercase tracking-wide px-2 py-1"
-                    style={{ border: `1px solid ${border}`, opacity: 0.7 }}
+                    className="inline-block text-xs font-semibold px-3 py-1 rounded-full w-fit"
+                    style={{ background: YELLOW, color: INK }}
                   >
                     {p.tag}
                   </span>
-                  <EyeOff size={18} opacity={0.5} />
+
+                  <h3 className="text-2xl font-black mt-5" style={{ color: INK }}>
+                    {p.name}
+                  </h3>
+
+                  {p.tech && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {p.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-xs px-3 py-1 rounded-full"
+                          style={{ background: "#F5F5F5", color: "#555" }}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <p className="text-sm leading-relaxed mt-4" style={{ color: "#555" }}>
+                    {p.copy}
+                  </p>
+
+                  <div
+                    className="mt-auto pt-6 flex items-center gap-2 font-semibold transition-all duration-300 group-hover:gap-3"
+                    style={{ color: TEAL }}
+                  >
+                    {p.cta || "View Project"}
+                    <ArrowUpRight size={18} />
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-3xl font-black uppercase mt-8">{p.name}</h3>
-                  <p className="text-sm mt-3 opacity-80 leading-relaxed">{p.copy}</p>
-                </div>
-                <ArrowUpRight
-                  size={22}
-                  className="mt-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                />
               </a>
             ))}
           </div>
-
-          {hovered && (
-            <img
-              src={projects.find((p) => p.name === hovered)?.preview}
-              alt={hovered}
-              className="fixed pointer-events-none rounded-lg shadow-2xl z-50 w-64 h-40 object-cover"
-              style={{
-                top: mousePos.y + 20,
-                left: mousePos.x + 20,
-              }}
-            />
-          )}
         </div>
       </section>
 
       {/* CONTACT */}
       <section id="contact" className="px-6 md:px-16 py-20">
-        <h2 className="text-4xl md:text-5xl font-black uppercase mb-10">Contact</h2>
+        <h2 className="text-4xl md:text-5xl font-black uppercase mb-10" style={{ color: YELLOW }}>
+          Contact
+        </h2>
 
         <div className="grid md:grid-cols-2 gap-8">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <label className="text-sm font-semibold">
+            <label className="text-sm font-semibold" style={{ color: TEXT_LIGHT }}>
               Name
               <input
                 required
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full mt-1 px-4 py-3 text-sm outline-none"
-                style={{ background: "transparent", border: `2px solid ${border}`, color: text }}
+                className="w-full mt-1 px-4 py-3 text-sm outline-none rounded-lg"
+                style={{ background: "transparent", border: `2px solid ${TEXT_LIGHT}`, color: TEXT_LIGHT }}
                 placeholder="Your name"
               />
             </label>
-            <label className="text-sm font-semibold">
+            <label className="text-sm font-semibold" style={{ color: TEXT_LIGHT }}>
               Email
               <input
                 required
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full mt-1 px-4 py-3 text-sm outline-none"
-                style={{ background: "transparent", border: `2px solid ${border}`, color: text }}
+                className="w-full mt-1 px-4 py-3 text-sm outline-none rounded-lg"
+                style={{ background: "transparent", border: `2px solid ${TEXT_LIGHT}`, color: TEXT_LIGHT }}
                 placeholder="you@email.com"
               />
             </label>
-            <label className="text-sm font-semibold">
+            <label className="text-sm font-semibold" style={{ color: TEXT_LIGHT }}>
               Message
               <textarea
                 required
                 rows={5}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full mt-1 px-4 py-3 text-sm outline-none resize-none"
-                style={{ background: "transparent", border: `2px solid ${border}`, color: text }}
+                className="w-full mt-1 px-4 py-3 text-sm outline-none resize-none rounded-lg"
+                style={{ background: "transparent", border: `2px solid ${TEXT_LIGHT}`, color: TEXT_LIGHT }}
                 placeholder="Let's talk about..."
               />
             </label>
             <button
               type="submit"
               disabled={sending}
-              className="mt-2 py-3 font-bold text-sm uppercase tracking-wide transition-opacity hover:opacity-85"
-              style={{ background: text, color: bg, opacity: sending ? 0.6 : 1 }}
+              className="mt-2 py-3 font-bold text-sm uppercase tracking-wide rounded-full transition-opacity hover:opacity-85"
+              style={{ background: YELLOW, color: INK, opacity: sending ? 0.6 : 1 }}
             >
               {sending ? "Sending..." : sent ? "Message sent!" : error ? "Failed — try again" : "Submit"}
             </button>
+            <p className="min-h-6 text-sm" aria-live="polite" style={{ color: error ? ROSE : TEXT_LIGHT }}>
+              {sent && "Thanks — your message has been sent."}
+              {error && "Your message could not be sent. Please email me directly instead."}
+            </p>
           </form>
 
           <div className="flex flex-col gap-5">
-            <iframe src="/JoeyMiral_Resume.pdf" title="Joey Miral Resume" className="flex-1 w-full min-h-[220px]" style={{ border: `2px solid ${border}` }} />
-              <a href="/JoeyMiral_Resume.pdf" download="Joey_Miral_Resume.pdf" className="py-3 rounded-full text-sm font-semibold text-center" style={{ border: `1px solid ${border}` }} >
-                  Download Resume
-              </a>
+            <iframe
+              src="/JoeyMiral_Resume.pdf"
+              title="Joey Miral Resume"
+              className="flex-1 w-full min-h-[220px] rounded-lg"
+              style={{ border: `2px solid ${TEXT_LIGHT}` }}
+            />
+            <a
+              href="/JoeyMiral_Resume.pdf"
+              download="Joey_Miral_Resume.pdf"
+              className="py-3 rounded-full text-sm font-semibold text-center"
+              style={{ background: ROSE, color: INK }}
+            >
+              Attached Resume
+            </a>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer
-        className="mt-6 px-6 md:px-16 py-14 rounded-t-[40px] flex flex-col items-center gap-6"
-        style={{ background: INK, color: PAPER }}
+        className="px-6 md:px-16 py-14 rounded-t-[40px] flex flex-col items-center gap-6"
+        style={{ background: "#DCE3E0", color: INK }}
       >
         <div className="flex items-center gap-5">
           {[
@@ -400,9 +704,9 @@ export default function JoeyPortfolio() {
               target={href.startsWith("mailto:") ? undefined : "_blank"}
               rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
               className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-75 transition-opacity"
-              style={{ background: PAPER }}
+              style={{ background: TEAL }}
             >
-              <Icon size={18} color={INK} />
+              <Icon size={18} color={TEXT_LIGHT} />
             </a>
           ))}
         </div>
