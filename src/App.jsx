@@ -495,7 +495,9 @@ export default function JoeyPortfolio() {
           </div>
         </div>
       </section>
+      </FadeInSection>
 
+      <FadeInSection>
       {/* SKILLS */}
       <section id="skills" className="px-6 md:px-16 pb-20">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Capabilities</p>
@@ -514,18 +516,21 @@ export default function JoeyPortfolio() {
               className="p-6 rounded-[28px]"
               style={{ border: `2px solid ${TEXT_LIGHT}` }}
             >
-              <h3
-                className="text-2xl font-bold mb-6"
-                style={{ color: TEXT_LIGHT }}
-              >
+              <h3 className="text-2xl font-bold mb-5" style={{ color: TEXT_LIGHT }}>
                 {skill.title}
               </h3>
 
-              <ul className="space-y-3" style={{ color: TEXT_MUTED }}>
+              <div className="flex flex-wrap gap-2">
                 {skill.items.map((item) => (
-                  <li key={item}>• {item}</li>
+                  <span
+                    key={item}
+                    className="text-xs px-3 py-1.5 rounded-full"
+                    style={{ border: `1px solid ${TEXT_MUTED}`, color: TEXT_MUTED }}
+                  >
+                    {item}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
           ))}
         </div>
