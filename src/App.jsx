@@ -9,6 +9,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import FadeInSection from "./components/FadeInSection";
 
 // ---- Design tokens: single teal theme ----
 const TEAL = "#34806D";        // primary background
@@ -268,6 +269,8 @@ export default function JoeyPortfolio() {
         </div>
       </section>
 
+
+      <FadeInSection>
       {/* Featured Projects */}
       <section className="px-6 md:px-16 py-24">
 
@@ -360,7 +363,10 @@ export default function JoeyPortfolio() {
 
         </div>
       </section>
+      </FadeInSection>
 
+
+      <FadeInSection>
       {/* ABOUT */}
       <section id="about" className="px-6 md:px-16 py-24">
         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -413,6 +419,9 @@ export default function JoeyPortfolio() {
 
         </div>
       </section>
+      </FadeInSection>
+
+      <FadeInSection>
 
       {/* BEYOND THE SCREEN */}
       <section className="px-6 md:px-16 py-24">
@@ -455,6 +464,9 @@ export default function JoeyPortfolio() {
           </div>
         </div>
       </section>
+      </FadeInSection>
+
+      <FadeInSection>
 
       {/* EXPERIENCE */}
       <section id="experience" className="px-6 md:px-16 py-24">
@@ -518,7 +530,9 @@ export default function JoeyPortfolio() {
           ))}
         </div>
       </section>
+      </FadeInSection>
 
+      <FadeInSection>  
       {/* PROJECTS */}
       <section id="projects" className="pb-4">
         <div className="px-6 md:px-16 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
@@ -609,7 +623,9 @@ export default function JoeyPortfolio() {
           </div>
         </div>
       </section>
+      </FadeInSection> 
 
+      <FadeInSection>
       {/* CONTACT */}
       <section id="contact" className="px-6 md:px-16 py-20">
         <h2 className="text-4xl md:text-5xl font-black uppercase mb-10" style={{ color: YELLOW }}>
@@ -685,6 +701,7 @@ export default function JoeyPortfolio() {
           </div>
         </div>
       </section>
+      </FadeInSection>
 
       {/* FOOTER */}
       <footer
