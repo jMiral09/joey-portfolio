@@ -202,20 +202,21 @@ export default function JoeyPortfolio() {
         )}
       </header>
 
+      <FadeInSection>
       {/* HERO */}
-      <section id="top" className="relative px-6 pb-20 pt-36 md:px-16 md:pb-20 md:pt-40 min-h-[80vh] flex items-center">
-        <div className="grid md:grid-cols-2 gap-12 items-center w-full">
+      <section id="top" className="relative px-6 pb-20 pt-36 md:px-16 lg:px-24 xl:px-32 md:pb-24 md:pt-44 min-h-[85vh] flex items-center">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
 
           <div>
             <p
-              className="mb-3 uppercase tracking-[4px] text-sm"
+              className="mb-3 uppercase tracking-[4px] text-sm md:text-base"
               style={{ color: TEXT_MUTED }}
             >
               Independent portfolio · 2026
             </p>
 
             <h1
-              className="text-5xl sm:text-6xl md:text-8xl leading-none"
+              className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none"
               style={{
                 fontFamily: "'TheQuicky', sans-serif",
                 color: ROSE,
@@ -225,7 +226,7 @@ export default function JoeyPortfolio() {
             </h1>
 
             <p
-              className="mt-6 max-w-xl text-lg leading-relaxed"
+              className="mt-6 max-w-xl text-lg md:text-xl leading-relaxed"
               style={{ color: TEXT_MUTED }}
             >
               UI/UX designer and frontend developer designing clear interfaces,
@@ -235,7 +236,7 @@ export default function JoeyPortfolio() {
             <div className="flex gap-4 mt-8 flex-wrap">
               <a
                 href="#projects"
-                className="hero-primary px-6 py-3 rounded-full font-semibold"
+                className="hero-primary px-7 py-3.5 rounded-full font-semibold text-base"
                 style={{
                   background: YELLOW,
                   color: INK,
@@ -243,11 +244,11 @@ export default function JoeyPortfolio() {
               >
                 View Projects
               </a>
+
               <a
-              
                 href="/JoeyMiral_Resume.pdf"
                 download
-                className="hero-secondary px-6 py-3 rounded-full border"
+                className="hero-secondary px-7 py-3.5 rounded-full border text-base"
                 style={{
                   borderColor: TEXT_LIGHT,
                   color: TEXT_LIGHT,
@@ -262,12 +263,13 @@ export default function JoeyPortfolio() {
             <img
               src={profilePic}
               alt="Joey Miral"
-              className="w-full max-w-[380px] aspect-[19/25] object-cover rounded-[28px]"
+              className="w-full max-w-[420px] lg:max-w-[460px] aspect-[19/25] object-cover rounded-[28px]"
             />
           </div>
 
         </div>
       </section>
+      </FadeInSection>
 
 
       <FadeInSection>
