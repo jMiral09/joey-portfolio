@@ -325,34 +325,43 @@ export default function JoeyPortfolio() {
 
         <div className="grid md:grid-cols-2 gap-8">
 
-          <div
-            className="min-h-[280px] rounded-[30px] p-8 flex flex-col justify-end"
-            style={{ background: TEAL_DARK }}
-          >
-            <p className="text-sm uppercase tracking-[3px]" style={{ color: YELLOW }}>
-              G-Active · 2024
-            </p>
-            <p className="mt-3 max-w-md text-lg leading-relaxed" style={{ color: TEXT_LIGHT }}>
-              Turning fragmented client, membership, and schedule information into one focused workspace for gym teams.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <a
-                href="https://www.figma.com/community/file/1212404815375242369/gym-client-based-website-and-gym-management-system-ui-design"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-semibold underline underline-offset-4 transition-opacity hover:opacity-75"
-                style={{ color: TEXT_LIGHT }}
-              >
-                View G-Active Design in Figma
-                <ArrowUpRight size={17} aria-hidden="true" />
-              </a>
-              <a
-                href="#contact"
-                className="font-semibold transition-opacity hover:opacity-75"
-                style={{ color: TEXT_MUTED }}
-              >
-                Ask me about the project
-              </a>
+          <div className="min-h-[280px] rounded-[30px] overflow-hidden relative flex flex-col justify-end">
+            <img
+              src="/images/banner_thumbnail.png"
+              alt="G-Active gym management system interface"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div
+              className="relative p-8 pt-16"
+              style={{
+                background: "linear-gradient(180deg, rgba(37,96,84,0) 0%, rgba(37,96,84,0.85) 60%, rgba(37,96,84,0.95) 100%)",
+              }}
+            >
+              <p className="text-sm uppercase tracking-[3px]" style={{ color: YELLOW }}>
+                G-Active · 2024
+              </p>
+              <p className="mt-3 max-w-md text-lg leading-relaxed" style={{ color: TEXT_LIGHT }}>
+                Turning fragmented client, membership, and schedule information into one focused workspace for gym teams.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <a
+                  href="https://www.figma.com/community/file/1212404815375242369/gym-client-based-website-and-gym-management-system-ui-design"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 font-semibold underline underline-offset-4 transition-opacity hover:opacity-75"
+                  style={{ color: TEXT_LIGHT }}
+                >
+                  View G-Active Design in Figma
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </a>
+                <a
+                  href="#contact"
+                  className="font-semibold transition-opacity hover:opacity-75"
+                  style={{ color: TEXT_MUTED }}
+                >
+                  Ask me about the project
+                </a>
+              </div>
             </div>
           </div>
 
