@@ -14,6 +14,7 @@ import FadeInSection from "./components/FadeInSection";
 // ---- Design tokens: single teal theme ----
 const TEAL = "#34806D";        // primary background
 const TEAL_DARK = "#256054";   // slightly darker teal for menu dropdown
+const INK_GREEN = "#0E211D";   // dark green for footer background
 const PAPER = "#FFFFFF";
 const INK = "#1A1A1A";
 const ROSE = "#E894A8";
@@ -94,6 +95,13 @@ export default function JoeyPortfolio() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
     const updateNavigation = () => setScrolled(window.scrollY > 24);
     updateNavigation();
     window.addEventListener("scroll", updateNavigation, { passive: true });
@@ -128,12 +136,22 @@ export default function JoeyPortfolio() {
   };
 
   return (
-    <div
-      style={{ background: TEAL, color: TEXT_LIGHT, minHeight: "100vh" }}
-      className="relative w-full overflow-hidden font-sans"
-    >
-      <div aria-hidden="true" className="hero-glow hero-glow-rose" />
-      <div aria-hidden="true" className="hero-glow hero-glow-yellow" />
+      <div
+      style={{
+        background: `linear-gradient(180deg,
+          #0E211D 0%,
+          #173D30 15%,
+          #1D4B41 28%,
+          #256054 42%,
+          #34806D 55%,
+          #8FA79E 72%,
+          #D6DEDA 86%,
+          #F6FBFA 100%)`,
+        color: TEXT_LIGHT,
+        minHeight: "100vh",
+      }}
+      className="relative w-full overflow-hidden font-sans">
+
       {/* NAV */}
       <header
         className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 md:px-16 transition-all duration-300"
@@ -148,11 +166,12 @@ export default function JoeyPortfolio() {
         <a
           href="#top"
           aria-label="Back to top"
-          className="font-bold tracking-[0.25em] text-sm"
-          style={{ color: TEXT_LIGHT }}
+          className="font-bold tracking-[0.25em] text-sm relative z-[60]"
+          style={{ color: menuOpen ? TEXT_LIGHT : TEXT_LIGHT }}
         >
           JM.
         </a>
+
         <nav className="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-[0.16em]" aria-label="Main navigation">
           {nav.map((item) => (
             <a
@@ -165,115 +184,120 @@ export default function JoeyPortfolio() {
             </a>
           ))}
         </nav>
+
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
           aria-controls="site-navigation"
-          className="w-10 h-10 flex md:hidden items-center justify-center"
+          className="w-10 h-10 flex md:hidden items-center justify-center relative z-[60]"
           style={{ color: TEXT_LIGHT }}
         >
           {menuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
 
-        {menuOpen && (
-          <nav
-            id="site-navigation"
-            className="absolute top-[4.5rem] right-6 flex flex-col gap-1 rounded-2xl border px-5 py-3 shadow-xl md:hidden"
-            style={{
-              background: "rgba(37, 96, 84, 0.88)",
-              borderColor: "rgba(246, 251, 250, 0.18)",
-              backdropFilter: "blur(18px)",
-              WebkitBackdropFilter: "blur(18px)",
-            }}
-          >
-            {nav.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                onClick={() => setMenuOpen(false)}
-                className="py-2 text-sm font-semibold tracking-wide hover:opacity-70 transition-opacity"
-                style={{ color: TEXT_LIGHT }}
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
-        )}
-      </header>
-
-      <FadeInSection>
-      {/* HERO */}
-      <section id="top" className="relative px-6 pb-20 pt-36 md:px-16 lg:px-24 xl:px-32 md:pb-24 md:pt-44 min-h-[85vh] flex items-center">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
-
-          <div>
-            <p
-              className="mb-3 uppercase tracking-[4px] text-sm md:text-base"
-              style={{ color: TEXT_MUTED }}
-            >
-              Independent portfolio · 2026
-            </p>
-
-            <h1
-              className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none"
+        <nav
+          id="site-navigation"
+          className="fixed inset-0 flex md:hidden flex-col items-center justify-center gap-5 transition-all duration-500 ease-in-out overflow-y-auto py-20"
+          style={{
+            background: INK_GREEN,
+            opacity: menuOpen ? 1 : 0,
+            visibility: menuOpen ? "visible" : "hidden",
+            transform: menuOpen ? "translateY(0)" : "translateY(-20px)",
+            height: "100dvh",
+          }}
+        >
+          {nav.map((item, i) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              onClick={() => setMenuOpen(false)}
+              className="text-2xl sm:text-3xl font-black uppercase tracking-wide transition-all duration-500"
               style={{
-                fontFamily: "'TheQuicky', sans-serif",
-                color: ROSE,
+                color: TEXT_LIGHT,
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? "translateY(0)" : "translateY(15px)",
+                transitionDelay: menuOpen ? `${i * 60}ms` : "0ms",
               }}
             >
-              Joey Miral
-            </h1>
+              {item}
+            </a>
+          ))}
+        </nav>
+      </header>
 
-            <p
-              className="mt-6 max-w-xl text-lg md:text-xl leading-relaxed"
-              style={{ color: TEXT_MUTED }}
+      {/* HERO */}
+      <FadeInSection>
+      <section id="top" className="relative px-6 pb-20 pt-36 md:px-16 lg:px-24 xl:px-32 md:pb-24 md:pt-44 min-h-[90vh] flex flex-col justify-between overflow-hidden">
+        <div className="flex-1 flex flex-col justify-center max-w-3xl">
+          <p
+            className="mb-3 uppercase tracking-[4px] text-sm md:text-base"
+            style={{ color: TEXT_MUTED }}
+          >
+            Independent portfolio · 2026
+          </p>
+
+          <h1
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none"
+            style={{
+              fontFamily: "'TheQuicky', sans-serif",
+              color: ROSE,
+            }}
+          >
+            Joey Miral
+          </h1>
+
+          <p
+            className="mt-6 max-w-xl text-2xl md:text-3xl font-bold leading-tight"
+            style={{ color: TEXT_LIGHT }}
+          >
+            I turn complex problems into interfaces that feel simple.
+          </p>
+
+          <p
+            className="mt-4 max-w-xl text-lg md:text-xl leading-relaxed"
+            style={{ color: TEXT_MUTED }}
+          >
+            UI/UX designer crafting clear, user-centered interfaces — backed by
+            frontend development skills to help ideas hold up in the real world.
+          </p>
+
+          <div className="flex gap-4 mt-8 flex-wrap">
+            <a
+              href="#projects"
+              className="hero-primary px-7 py-3.5 rounded-full font-semibold text-base"
+              style={{
+                background: YELLOW,
+                color: INK,
+              }}
             >
-              UI/UX designer and frontend developer designing clear interfaces,
-              reliable systems, and thoughtful digital experiences.
-            </p>
-
-            <div className="flex gap-4 mt-8 flex-wrap">
-              <a
-                href="#projects"
-                className="hero-primary px-7 py-3.5 rounded-full font-semibold text-base"
-                style={{
-                  background: YELLOW,
-                  color: INK,
-                }}
-              >
-                View Projects
-              </a>
-
-              <a
-                href="/JoeyMiral_Resume.pdf"
-                download
-                className="hero-secondary px-7 py-3.5 rounded-full border text-base"
-                style={{
-                  borderColor: TEXT_LIGHT,
-                  color: TEXT_LIGHT,
-                }}
-              >
-                Download Resume
-              </a>
-            </div>
+              View Projects
+            </a>
+            <a
+              href="/JoeyMiral_Resume.pdf"
+              download
+              className="hero-secondary px-7 py-3.5 rounded-full border text-base"
+              style={{
+                borderColor: TEXT_LIGHT,
+                color: TEXT_LIGHT,
+              }}
+            >
+              Download Resume
+            </a>
           </div>
+        </div>
 
-          <div className="flex justify-center">
-            <img
-              src={profilePic}
-              alt="Joey Miral"
-              className="w-full max-w-[420px] lg:max-w-[460px] aspect-[19/25] object-cover rounded-[28px]"
-            />
-          </div>
-
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-10 mt-10 border-t" style={{ borderColor: "rgba(246,251,250,0.15)" }}>
+          <span className="text-sm font-semibold" style={{ color: TEXT_LIGHT }}>UI/UX Design</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT_MUTED }}>Cum Laude · TUP</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT_MUTED }}>Figma & Design Systems</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT_MUTED }}>Metro Manila, PH</span>
         </div>
       </section>
       </FadeInSection>
 
-
-      <FadeInSection>
       {/* Featured Projects */}
+      <FadeInSection>
       <section className="px-6 md:px-16 py-24">
 
         <div className="mb-12">
@@ -367,32 +391,20 @@ export default function JoeyPortfolio() {
       </section>
       </FadeInSection>
 
-
-      <FadeInSection>
       {/* ABOUT */}
+      <FadeInSection>
       <section id="about" className="px-6 md:px-16 py-24">
         <div className="grid md:grid-cols-2 gap-12 items-center">
 
-          <div
-            className="rounded-[28px] p-8 md:p-10 flex flex-col justify-between min-h-[300px]"
-            style={{ background: TEAL_DARK }}
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: YELLOW }}>
-              A quick introduction
-            </p>
-            <div className="space-y-5">
-              <div>
-                <p className="text-2xl font-bold" style={{ color: TEXT_LIGHT }}>BSIT, Cum Laude</p>
-                <p className="mt-1" style={{ color: TEXT_MUTED }}>Technological University of the Philippines</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold" style={{ color: TEXT_LIGHT }}>UI/UX + Frontend</p>
-                <p className="mt-1" style={{ color: TEXT_MUTED }}>Interface design grounded in systems thinking</p>
-              </div>
-            </div>
+          <div className="flex justify-center order-2 md:order-1">
+            <img
+              src={profilePic}
+              alt="Joey Miral"
+              className="w-full max-w-[380px] aspect-[4/5] object-cover rounded-[28px]"
+            />
           </div>
 
-          <div>
+          <div className="order-1 md:order-2">
             <h2
               className="text-5xl font-black"
               style={{ color: TEXT_LIGHT }}
@@ -417,15 +429,25 @@ export default function JoeyPortfolio() {
               operations at Metrobank while continuing to build
               digital products and user-centered experiences.
             </p>
+
+            <div className="mt-8 space-y-5 pt-6 border-t" style={{ borderColor: "rgba(246,251,250,0.15)" }}>
+              <div>
+                <p className="text-2xl font-bold" style={{ color: TEXT_LIGHT }}>BSIT, Cum Laude</p>
+                <p className="mt-1" style={{ color: TEXT_MUTED }}>Technological University of the Philippines</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold" style={{ color: TEXT_LIGHT }}>UI/UX + Frontend</p>
+                <p className="mt-1" style={{ color: TEXT_MUTED }}>Interface design grounded in systems thinking</p>
+              </div>
+            </div>
           </div>
 
         </div>
       </section>
       </FadeInSection>
 
-      <FadeInSection>
-
       {/* BEYOND THE SCREEN */}
+      <FadeInSection>
       <section className="px-6 md:px-16 py-24">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <img
@@ -468,9 +490,8 @@ export default function JoeyPortfolio() {
       </section>
       </FadeInSection>
 
+      {/* EXPERIENCE */}      
       <FadeInSection>
-
-      {/* EXPERIENCE */}
       <section id="experience" className="px-6 md:px-16 py-24">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Selected experience</p>
         <h2
@@ -499,8 +520,8 @@ export default function JoeyPortfolio() {
       </section>
       </FadeInSection>
 
-      <FadeInSection>
       {/* SKILLS */}
+      <FadeInSection>
       <section id="skills" className="px-6 md:px-16 pb-20">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Capabilities</p>
         <h2 className="text-4xl md:text-5xl font-black uppercase" style={{ color: TEXT_LIGHT }}>
@@ -539,8 +560,8 @@ export default function JoeyPortfolio() {
       </section>
       </FadeInSection>
 
+      {/* PROJECTS */}    
       <FadeInSection>  
-      {/* PROJECTS */}
       <section id="projects" className="pb-4">
         <div className="px-6 md:px-16 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
           <div>
@@ -630,29 +651,29 @@ export default function JoeyPortfolio() {
           </div>
         </div>
       </section>
-      </FadeInSection> 
+      </FadeInSection>
 
-      <FadeInSection>
       {/* CONTACT */}
+      <FadeInSection>
       <section id="contact" className="px-6 md:px-16 py-20">
-        <h2 className="text-4xl md:text-5xl font-black uppercase mb-10" style={{ color: YELLOW }}>
+        <h2 className="text-4xl md:text-5xl font-black uppercase mb-10" style={{ color: INK }}>
           Contact
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <label className="text-sm font-semibold" style={{ color: TEXT_LIGHT }}>
+            <label className="text-sm font-semibold" style={{ color: INK }}>
               Name
               <input
                 required
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full mt-1 px-4 py-3 text-sm outline-none rounded-lg"
-                style={{ background: "transparent", border: `2px solid ${TEXT_LIGHT}`, color: TEXT_LIGHT }}
+                style={{ background: "transparent", border: `2px solid ${INK}`, color: INK }}
                 placeholder="Your name"
               />
             </label>
-            <label className="text-sm font-semibold" style={{ color: TEXT_LIGHT }}>
+            <label className="text-sm font-semibold" style={{ color: INK }}>
               Email
               <input
                 required
@@ -660,11 +681,11 @@ export default function JoeyPortfolio() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full mt-1 px-4 py-3 text-sm outline-none rounded-lg"
-                style={{ background: "transparent", border: `2px solid ${TEXT_LIGHT}`, color: TEXT_LIGHT }}
+                style={{ background: "transparent", border: `2px solid ${INK}`, color: INK }}
                 placeholder="you@email.com"
               />
             </label>
-            <label className="text-sm font-semibold" style={{ color: TEXT_LIGHT }}>
+            <label className="text-sm font-semibold" style={{ color: INK }}>
               Message
               <textarea
                 required
@@ -672,7 +693,7 @@ export default function JoeyPortfolio() {
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 className="w-full mt-1 px-4 py-3 text-sm outline-none resize-none rounded-lg"
-                style={{ background: "transparent", border: `2px solid ${TEXT_LIGHT}`, color: TEXT_LIGHT }}
+                style={{ background: "transparent", border: `2px solid ${INK}`, color: INK }}
                 placeholder="Let's talk about..."
               />
             </label>
@@ -680,11 +701,11 @@ export default function JoeyPortfolio() {
               type="submit"
               disabled={sending}
               className="mt-2 py-3 font-bold text-sm uppercase tracking-wide rounded-full transition-opacity hover:opacity-85"
-              style={{ background: YELLOW, color: INK, opacity: sending ? 0.6 : 1 }}
+              style={{ background: TEAL, color: TEXT_LIGHT, opacity: sending ? 0.6 : 1 }}
             >
               {sending ? "Sending..." : sent ? "Message sent!" : error ? "Failed — try again" : "Submit"}
             </button>
-            <p className="min-h-6 text-sm" aria-live="polite" style={{ color: error ? ROSE : TEXT_LIGHT }}>
+            <p className="min-h-6 text-sm" aria-live="polite" style={{ color: error ? "#A32D2D" : INK }}>
               {sent && "Thanks — your message has been sent."}
               {error && "Your message could not be sent. Please email me directly instead."}
             </p>
@@ -692,18 +713,18 @@ export default function JoeyPortfolio() {
 
           <div className="flex flex-col gap-5">
             <iframe
-              src="/JoeyMiral_Resume.pdf"
-              title="Joey Miral Resume"
+              src="/Joey_Miral_CV.pdf"
+              title="Joey Miral CV"
               className="flex-1 w-full min-h-[220px] rounded-lg"
-              style={{ border: `2px solid ${TEXT_LIGHT}` }}
+              style={{ border: `2px solid ${INK}` }}
             />
             <a
-              href="/JoeyMiral_Resume.pdf"
-              download="Joey_Miral_Resume.pdf"
-              className="py-3 rounded-full text-sm font-semibold text-center"
-              style={{ background: ROSE, color: INK }}
-            >
-              Attached Resume
+                href="/Joey_Miral_CV.pdf"
+                download="Joey_Miral_CV.pdf"
+                className="py-3 rounded-full text-sm font-semibold text-center border-2 transition-colors hover:opacity-85"
+                style={{ borderColor: TEAL, color: TEAL }}
+              >
+              Download CV
             </a>
           </div>
         </div>
@@ -713,7 +734,7 @@ export default function JoeyPortfolio() {
       {/* FOOTER */}
       <footer
         className="px-6 md:px-16 py-14 rounded-t-[40px] flex flex-col items-center gap-6"
-        style={{ background: "#DCE3E0", color: INK }}
+        style={{ background: INK_GREEN, color: TEXT_LIGHT }}
       >
         <div className="flex items-center gap-5">
           {[
@@ -728,9 +749,9 @@ export default function JoeyPortfolio() {
               target={href.startsWith("mailto:") ? undefined : "_blank"}
               rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
               className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-75 transition-opacity"
-              style={{ background: TEAL }}
+              style={{ background: TEXT_LIGHT }}
             >
-              <Icon size={18} color={TEXT_LIGHT} />
+              <Icon size={18} color={INK_GREEN} />
             </a>
           ))}
         </div>
