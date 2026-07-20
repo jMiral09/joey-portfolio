@@ -282,7 +282,7 @@ export default function JoeyPortfolio() {
                 color: TEXT_LIGHT,
               }}
             >
-              Download Resume
+              Download CV
             </a>
           </div>
         </div>
