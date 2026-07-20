@@ -274,7 +274,7 @@ export default function JoeyPortfolio() {
               View Projects
             </a>
             <a
-              href="/JoeyMiral_Resume.pdf"
+              href="/Joey_Miral_CV.pdf"
               download
               className="hero-secondary px-7 py-3.5 rounded-full border text-base"
               style={{
