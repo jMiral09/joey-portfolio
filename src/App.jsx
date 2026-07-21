@@ -35,7 +35,7 @@ const skills = [
   },
   {
     title: "Web Performance & SEO",
-    items: ["On-Page SEO", "Lighthouse Audits", "Accessibility (WCAG)", "Core Web Vitals"],
+    items: ["On-Page SEO", "Google Analytics (GA4)", "Google Tag Manager", "Lighthouse Audits", "Accessibility (WCAG)"],
   },
   {
     title: "Database",
@@ -442,6 +442,16 @@ export default function JoeyPortfolio() {
               Most recently, I supported mission-critical banking
               operations at Metrobank while continuing to build
               digital products and user-centered experiences.
+            </p>
+
+            <p
+              className="mt-4 leading-relaxed"
+              style={{ color: TEXT_MUTED }}
+            >
+              This site itself is a working example of that process. I audited it with
+              Lighthouse, cut page weight by nearly 40% through image optimization,
+              fixed accessibility gaps, and set up Google Analytics and Tag Manager
+              for real tracking.
             </p>
 
             <div className="mt-8 space-y-5 pt-6 border-t" style={{ borderColor: "rgba(246,251,250,0.15)" }}>
