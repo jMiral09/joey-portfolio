@@ -34,6 +34,10 @@ const skills = [
     items: ["React", "Next.js", "TailwindCSS", "JavaScript"],
   },
   {
+    title: "Web Performance & SEO",
+    items: ["On-Page SEO", "Lighthouse Audits", "Accessibility (WCAG)", "Core Web Vitals"],
+  },
+  {
     title: "Database",
     items: ["MySQL", "PostgreSQL", "SQL Server"],
   },
@@ -538,11 +542,11 @@ export default function JoeyPortfolio() {
           Skills
         </h2>
         <p className="max-w-2xl mt-3 text-sm md:text-base" style={{ color: TEXT_MUTED }}>
-          Three disciplines I move between depending on what a project needs —
+          Four disciplines I move between depending on what a project needs —
           from the interface down to the schema underneath it.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-5 mt-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mt-8">
           {skills.map((skill) => (
             <div
               key={skill.title}
