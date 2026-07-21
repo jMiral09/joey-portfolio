@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import profilePic from "./assets/aboutme_profile.jpg";
+import profilePic from "./assets/aboutme_profile.webp";
 import {
   Facebook,
   Linkedin,
@@ -48,7 +48,7 @@ const projects = [
       "A 15-screen mobile UI design for plant care and gardening — covering onboarding, plant tracking, and care reminders — built around a clean, nature-inspired interface that keeps day-to-day plant care simple.",
     link:
       "https://www.behance.net/gallery/179128031/Planti-Tao-Mobile-App-UI-Design",
-    preview: "/images/planti_tao_banner.png",
+    preview: "/images/planti_tao_banner.webp",
   },
   {
     name: "CM Shop",
@@ -58,7 +58,7 @@ const projects = [
       "An e-commerce UI design featuring a redesigned checkout flow, built to showcase products with a modern, minimal storefront layout.",
     link:
       "https://www.behance.net/gallery/177505945/UI-Design-CM-Shop-E-Commerce-Website",
-    preview: "/images/cmshop_banner.png",
+    preview: "/images/cmshop_banner.webp",
   },
   {
     name: "Social Platform Backend API",
@@ -226,6 +226,7 @@ export default function JoeyPortfolio() {
         </nav>
       </header>
 
+      <main>
       {/* HERO */}
       <FadeInSection>
       <section id="top" className="relative px-6 pb-20 pt-36 md:px-16 lg:px-24 xl:px-32 md:pb-24 md:pt-44 min-h-[90vh] flex flex-col justify-between overflow-hidden">
@@ -327,7 +328,7 @@ export default function JoeyPortfolio() {
 
           <div className="min-h-[280px] rounded-[30px] overflow-hidden relative flex flex-col justify-end">
             <img
-              src="/images/banner_thumbnail.png"
+              src="/images/banner_thumbnail.webp"
               alt="G-Active gym management system interface"
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -460,7 +461,7 @@ export default function JoeyPortfolio() {
       <section className="px-6 md:px-16 py-24">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <img
-            src="/images/beyond-screen.jpg"
+            src="/images/beyond-screen.webp"
             alt="Joey creating music in his home studio"
             loading="lazy"
             className="w-full aspect-[3/2] object-cover rounded-[28px]"
@@ -739,6 +740,7 @@ export default function JoeyPortfolio() {
         </div>
       </section>
       </FadeInSection>
+      </main>
 
       {/* FOOTER */}
       <footer
@@ -751,16 +753,17 @@ export default function JoeyPortfolio() {
             { Icon: Linkedin, href: "https://www.linkedin.com/in/joey-miral-06a89724a/" },
             { Icon: Instagram, href: "https://www.instagram.com/yeoj.mp3/" },
             { Icon: Mail, href: "mailto:miraljoey291@gmail.com" },
-          ].map(({ Icon, href }, i) => (
+          ].map(({ Icon, href, label }, i) => (
             <a
               key={i}
               href={href}
+              aria-label={label}
               target={href.startsWith("mailto:") ? undefined : "_blank"}
               rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
               className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-75 transition-opacity"
               style={{ background: TEXT_LIGHT }}
             >
-              <Icon size={18} color={INK_GREEN} />
+              <Icon size={18} color={INK_GREEN} aria-hidden="true" />
             </a>
           ))}
         </div>
