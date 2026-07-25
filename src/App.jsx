@@ -303,7 +303,7 @@ export default function JoeyPortfolio() {
 
       {/* Featured Projects */}
       <FadeInSection>
-      <section className="px-6 md:px-16 py-24">
+      <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-24">
 
         <div className="mb-12">
           <p
@@ -407,7 +407,7 @@ export default function JoeyPortfolio() {
 
       {/* ABOUT */}
       <FadeInSection>
-      <section id="about" className="px-6 md:px-16 py-24">
+      <section id="about" className="px-6 md:px-16 lg:px-24 xl:px-32 py-24">
         <div className="grid md:grid-cols-2 gap-12 items-center">
 
           <div className="flex justify-center order-2 md:order-1">
@@ -472,7 +472,7 @@ export default function JoeyPortfolio() {
 
       {/* BEYOND THE SCREEN */}
       <FadeInSection>
-      <section className="px-6 md:px-16 py-24">
+      <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-24">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <img
             src="/images/beyond-screen.webp"
@@ -516,7 +516,7 @@ export default function JoeyPortfolio() {
 
       {/* EXPERIENCE */}      
       <FadeInSection>
-      <section id="experience" className="px-6 md:px-16 py-24">
+      <section id="experience" className="px-6 md:px-16 lg:px-24 xl:px-32 py-24">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Selected experience</p>
         <h2
           className="text-5xl font-black mb-12"
@@ -546,7 +546,7 @@ export default function JoeyPortfolio() {
 
       {/* SKILLS */}
       <FadeInSection>
-      <section id="skills" className="px-6 md:px-16 pb-20">
+      <section id="skills" className="px-6 md:px-16 lg:px-24 xl:px-32 py-24">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Capabilities</p>
         <h2 className="text-4xl md:text-5xl font-black uppercase" style={{ color: TEXT_LIGHT }}>
           Skills
@@ -586,7 +586,7 @@ export default function JoeyPortfolio() {
 
       {/* PROJECTS */}    
       <FadeInSection>  
-      <section id="projects" className="pb-4">
+      <section id="projects" className="pb-4 px-6md:px-16 lg:px-24 xl:px-32 py-24">
         <div className="px-6 md:px-16 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Selected work · 2023—2026</p>
@@ -679,7 +679,7 @@ export default function JoeyPortfolio() {
 
       {/* CONTACT */}
       <FadeInSection>
-      <section id="contact" className="px-6 md:px-16 py-20">
+      <section id="contact" className="px-6 md:px-16 lg:px-24 xl:px-32 py-24">
         <h2 className="text-4xl md:text-5xl font-black uppercase mb-10" style={{ color: INK }}>
           Contact
         </h2>
