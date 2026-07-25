@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import profilePic from "./assets/aboutme_profile.webp";
+import profilePicSmall from "./assets/aboutme_profile-480w.webp"; // add this
 import {
   Facebook,
   Linkedin,
@@ -53,6 +54,7 @@ const projects = [
     link:
       "https://www.behance.net/gallery/179128031/Planti-Tao-Mobile-App-UI-Design",
     preview: "/images/planti_tao_banner.webp",
+    previewSmall: "/images/planti_tao_banner-480w.webp", // new
   },
   {
     name: "CM Shop",
@@ -63,6 +65,7 @@ const projects = [
     link:
       "https://www.behance.net/gallery/177505945/UI-Design-CM-Shop-E-Commerce-Website",
     preview: "/images/cmshop_banner.webp",
+    previewSmall: "/images/cmshop_banner-480w.webp", // new
   },
   {
     name: "Social Platform Backend API",
@@ -333,6 +336,8 @@ export default function JoeyPortfolio() {
           <div className="min-h-[280px] rounded-[30px] overflow-hidden relative flex flex-col justify-end">
             <img
               src="/images/banner_thumbnail.webp"
+              srcSet="/images/banner_thumbnail-480w.webp 480w, /images/banner_thumbnail.webp 1200w"
+              sizes="(max-width: 768px) 480px, 1200px"
               alt="G-Active gym management system interface"
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -413,6 +418,8 @@ export default function JoeyPortfolio() {
           <div className="flex justify-center order-2 md:order-1">
             <img
               src={profilePic}
+              srcSet={`${profilePicSmall} 380w, ${profilePic} 760w`}
+              sizes="(max-width: 768px) 300px, 380px"
               alt="Joey Miral"
               className="w-full max-w-[380px] aspect-[4/5] object-cover rounded-[28px]"
             />
@@ -476,6 +483,8 @@ export default function JoeyPortfolio() {
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <img
             src="/images/beyond-screen.webp"
+            srcSet="/images/beyond-screen-480w.webp 480w, /images/beyond-screen.webp 900w"
+            sizes="(max-width: 768px) 100vw, 500px"
             alt="Joey creating music in his home studio"
             loading="lazy"
             className="w-full aspect-[3/2] object-cover rounded-[28px]"
@@ -587,7 +596,7 @@ export default function JoeyPortfolio() {
       {/* PROJECTS */}    
       <FadeInSection>  
       <section id="projects" className="pb-4 px-6md:px-16 lg:px-24 xl:px-32 py-24">
-        <div className="px-6 md:px-16 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Selected work · 2023—2026</p>
             <h2 className="text-4xl md:text-5xl font-black uppercase" style={{ color: TEXT_LIGHT }}>
@@ -599,7 +608,7 @@ export default function JoeyPortfolio() {
           </p>
         </div>
         <div className="relative">
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12 px-6 md:px-16">
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12">
             {projects.map((p) => (
               <a
                 key={p.name}
