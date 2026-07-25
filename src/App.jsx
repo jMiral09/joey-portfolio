@@ -595,7 +595,7 @@ export default function JoeyPortfolio() {
 
       {/* PROJECTS */}    
       <FadeInSection>  
-      <section id="projects" className="pb-4 px-6md:px-16 lg:px-24 xl:px-32 py-24">
+      <section id="projects" className="pb-4 px-6 md:px-16 lg:px-24 xl:px-32 py-24">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: YELLOW }}>Selected work · 2023—2026</p>
