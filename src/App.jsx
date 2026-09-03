@@ -3,6 +3,8 @@ import profilePic from "./assets/aboutme.webp";
 import profilePicSmall from "./assets/aboutme.webp"; // add this
 import logoLight from "./assets/joey-logo.svg"; // dark marks — use on light backgrounds
 import logoDark from "./assets/joey-logo-dark.svg"; // white marks — use on dark backgrounds
+import profilePicPixelated from "./assets/aboutme_profile_pixelated.webp"; // default state — swaps to the real photo on hover
+import profilePicPixelatedSmall from "./assets/aboutme_profile_pixelated-480w.webp";
 import {
   Facebook,
   Linkedin,
@@ -531,14 +533,27 @@ export default function JoeyPortfolio() {
             <SectionTag index="02" label="ABOUT" />
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="flex justify-center order-2 md:order-1">
-                <BracketFrame className="w-full max-w-[380px]">
-                  <img
-                    src={profilePic}
-                    srcSet={`${profilePicSmall} 380w, ${profilePic} 760w`}
-                    sizes="(max-width: 768px) 300px, 380px"
-                    alt="Joey Miral"
-                    className="w-full aspect-[4/5] object-cover"
-                  />
+                <BracketFrame className="w-full max-w-[380px] group cursor-pointer">
+                  <div className="relative w-full aspect-[4/5] overflow-hidden">
+                    {/* Default: pixelated portrait, generated at runtime from the real photo */}
+                    {profilePicPixelated && (
+                      <img
+                        src={profilePicPixelated}
+                        alt="Joey Miral, pixelated portrait"
+                        aria-hidden="true"
+                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out opacity-100 group-hover:opacity-0"
+                      />
+                    )}
+                    {/* Hover (or fallback while the canvas is still processing): real photo */}
+                    <img
+                      src={profilePic}
+                      srcSet={`${profilePicSmall} 380w, ${profilePic} 760w`}
+                      sizes="(max-width: 768px) 300px, 380px"
+                      alt="Joey Miral"
+                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out opacity-0 group-hover:opacity-100"
+                      style={profilePicPixelated ? undefined : { opacity: 1 }}
+                    />
+                  </div>
                 </BracketFrame>
               </div>
 
@@ -578,7 +593,7 @@ export default function JoeyPortfolio() {
           </section>
         </FadeInSection>
 
-        {/* BEYOND THE SCREEN */}
+        {/* BEYOND THE SCREEN 
         <FadeInSection>
           <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
             <SectionTag index="03" label="BEYOND THE SCREEN" />
@@ -624,6 +639,7 @@ export default function JoeyPortfolio() {
             </div>
           </section>
         </FadeInSection>
+        */}
 
         {/* EXPERIENCE */}
         <FadeInSection>
@@ -635,13 +651,31 @@ export default function JoeyPortfolio() {
 
             <div style={{ borderTop: `1px solid ${T.line}` }}>
               {[
-                { org: "Metropolitan Bank & Trust Company", role: "Computer Operator", period: "2024 – June 2026" },
-                { org: "ScoutStaff Inc.", role: "Java Development Engineer", period: "2023 – 2024" },
-                { org: "4Gives Finance", role: "Database Designer Intern", period: "" },
+                {
+                  org: "Metropolitan Bank & Trust Company",
+                  role: "Computer Operator — Data & IT Operations",
+                  period: "July 2024 – June 2026 | On-site",
+                  blurb:
+                    "Monitored live batch jobs and transaction pipelines under strict SLAs, tracing failures to root cause and running performance/latency testing to flag issues for the dev team.",
+                },
+                {
+                  org: "ScoutStaff Inc.",
+                  role: "Java Development Engineer",
+                  period: "October 2023 – April 2024 | On-site",
+                  blurb:
+                    "Built and maintained RESTful APIs with Spring Boot, working with stakeholders on requirements and testing via Postman and Docker in Agile sprints.",
+                },
+                {
+                  org: "4Gives Finance",
+                  role: "Database Designer Intern (Data Team)",
+                  period: "March 2023 – June 2023 | Remote",
+                  blurb:
+                    "Designed a normalized Sales Report database from scratch for a fintech project, documenting the schema via ER diagrams for the dev team.",
+                },
               ].map((job, i) => (
                 <div
                   key={job.org}
-                  className="grid md:grid-cols-[60px_1fr_auto] items-baseline gap-4 py-6"
+                  className="grid md:grid-cols-[60px_1fr_auto] items-start gap-4 py-6"
                   style={{ borderBottom: `1px solid ${T.line}` }}
                 >
                   <span style={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textSecondary }}>
@@ -649,7 +683,10 @@ export default function JoeyPortfolio() {
                   </span>
                   <div>
                     <h3 className="text-xl md:text-2xl font-semibold" style={{ color: T.textPrimary }}>{job.org}</h3>
-                    <p style={{ color: T.textSecondary }}>{job.role}</p>
+                    <p className="mt-0.5" style={{ color: T.textSecondary }}>{job.role}</p>
+                    <p className="mt-3 max-w-2xl text-sm leading-relaxed" style={{ color: T.textSecondary }}>
+                      {job.blurb}
+                    </p>
                   </div>
                   <span style={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textSecondary }}>{job.period}</span>
                 </div>
