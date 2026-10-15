@@ -73,16 +73,29 @@ const skills = [
     items: ["Windows", "macOS", "Linux"],
   },
   {
-    title: "Cloud",
+    title: "Cloud & DevOps",
     items: ["AWS", "Google Cloud", "Azure"],
   },
   {
     title: "Tools & Collaboration",
     items: ["Git", "GitHub", "GitHub Actions", "GitLab", "Slack", "Claude Code"],
   },
+  {
+    title: "IT Operations & Compliance",
+    items: ["Control-M", "Mochasoft TN3270", "WinSCP", "Putty", "Filezilla", "Finastra Fusion OPICS", "FIS", "Oracle Datawarehouse"],
+  },
 ];
 
 const projects = [
+    {
+    name: "G-Active",
+    tag: "Capstone Project",
+    link: "https://www.figma.com/community/file/1212404815375242369/gym-client-based-website-and-gym-management-system-ui-design",
+    cta: "View Design in Figma",
+    preview: "/images/banner_thumbnail-480w.webp",
+    tech: ["CodeIgniter", "AJAX", "ChartJS", "MySQL", "Figma"],
+    copy: "A cloud-based gym management system with three role-based dashboards (admin, staff, and member) for fast access to records, memberships, and operational data. I led the project and handled the UI/UX design and frontend development.",
+  },
   {
     name: "Planti-Tao",
     tag: "Mobile App",
@@ -447,47 +460,52 @@ export default function JoeyPortfolio() {
           </section>
         </FadeInSection>
 
-        {/* Featured Project — G-Active */}
+        {/* Featured Project — Calendar Agent */}
         <FadeInSection>
           <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
-            <SectionTag index="01" label="CASE STUDY" />
+            <SectionTag index="02" label="CASE STUDY" />
 
             <h2 className="text-5xl font-semibold" style={{ color: T.textPrimary }}>
-              G-Active
+              Calendar Agent
             </h2>
 
             <p className="max-w-2xl mt-4" style={{ color: T.textSecondary }}>
-              A cloud-based gym management system, designed and developed as my capstone project.
+              A full-stack AI assistant that turns plain-language requests into Google Calendar events.
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 mt-10">
-              <BracketFrame className="min-h-[280px] overflow-hidden relative flex flex-col justify-end">
-                <img
-                  src="/images/banner_thumbnail.webp"
-                  srcSet="/images/banner_thumbnail-480w.webp 480w, /images/banner_thumbnail.webp 1200w"
-                  sizes="(max-width: 768px) 480px, 1200px"
-                  alt="G-Active gym management system interface"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div
-                  className="relative p-8 pt-16"
-                  style={{
-                    background: `linear-gradient(180deg, rgba(${T.overlayRgb},0) 0%, rgba(${T.overlayRgb},0.85) 55%, rgba(${T.overlayRgb},0.96) 100%)`,
-                  }}
-                >
-                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>G-Active · 2024</p>
+              <BracketFrame className="flex flex-col">
+                <div className="relative overflow-hidden">
+                  <img
+                    src="/images/calendar_agent_thumbnail.webp"
+                    alt="Calendar Agent chat listing tomorrow's events from Google Calendar"
+                    width={436}
+                    height={304}
+                    loading="lazy"
+                    className="w-full h-auto opacity-90"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: `linear-gradient(180deg, rgba(${T.overlayRgb},0) 40%, rgba(${T.overlayRgb},0.7) 75%, rgba(${T.overlayRgb},0.96) 100%)`,
+                    }}
+                  />
+                </div>
+                <div className="px-8 pb-8 -mt-6 relative">
+                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>Calendar Agent · 2026</p>
                   <p className="mt-3 max-w-md text-lg leading-relaxed" style={{ color: T.textPrimary }}>
-                    Turning fragmented client, membership, and schedule information into one focused workspace for gym teams.
+                    Describe a meeting in one sentence. The agent works out the date and books it.
                   </p>
                   <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
                     <a
-                      href="https://www.figma.com/community/file/1212404815375242369/gym-client-based-website-and-gym-management-system-ui-design"
+                      href="https://github.com/jMiral09/calendar-agent"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 underline underline-offset-4 transition-opacity hover:opacity-75"
                       style={{ color: T.textPrimary }}
                     >
-                      View G-Active Design in Figma
+                      View on GitHub
                       <ArrowUpRight size={15} aria-hidden="true" />
                     </a>
                     <a href="#contact" className="transition-opacity hover:opacity-75" style={{ color: T.textSecondary }}>
@@ -502,13 +520,13 @@ export default function JoeyPortfolio() {
                   <div>
                     <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>My contribution</p>
                     <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
-                      Project lead, UI/UX designer, and frontend developer—guiding the experience from system flow to interface implementation.
+                      Solo project. I designed the architecture and built the chat interface, the API layer, and the calendar agent with its tools.
                     </p>
                   </div>
                   <div>
-                    <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>Designed for</p>
+                    <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>How it works</p>
                     <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
-                      Designed for 3 distinct user roles — admin, staff, and member — each with a tailored dashboard for fast access to records, memberships, and operational data without added complexity.
+                      A React chat sends the request through a Next.js API route to a FastAPI backend, where an LLM agent uses calendar tools to create the event in Google Calendar and reply with a confirmation.
                     </p>
                   </div>
                 </div>
@@ -516,7 +534,7 @@ export default function JoeyPortfolio() {
                 <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal, marginTop: 36 }}>Built with</p>
 
                 <div className="flex flex-wrap gap-3 mt-4" style={{ fontFamily: FONT_MONO, fontSize: 12 }}>
-                  {["CodeIgniter", "AJAX", "ChartJS", "MySQL", "Figma"].map((tech) => (
+                  {["Next.js", "TypeScript", "FastAPI", "LangChain", "Groq", "Google Calendar API"].map((tech) => (
                     <span key={tech} className="px-3 py-1.5" style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}>
                       {tech}
                     </span>
@@ -919,11 +937,11 @@ export default function JoeyPortfolio() {
 
               <div className="flex flex-col gap-5">
                 <BracketFrame className="flex-1 min-h-[220px] overflow-hidden">
-                  <iframe src="/Joey_Miral__CV.pdf" title="Joey Miral CV" className="w-full h-full min-h-[220px]" />
+                  <iframe src="/Joey_Miral_CV.pdf" title="Joey Miral CV" className="w-full h-full min-h-[220px]" />
                 </BracketFrame>
                 <a
-                  href="/Joey_Miral__CV.pdf"
-                  download="Joey_Miral__CV.pdf"
+                  href="/Joey_Miral_CV.pdf"
+                  download="Joey_Miral_CV.pdf"
                   className="py-3 text-center transition-colors duration-200"
                   style={{ fontFamily: FONT_MONO, fontSize: 13, border: `1px solid ${T.line}`, color: T.textPrimary }}
                   onMouseEnter={(e) => (e.currentTarget.style.borderColor = T.signal)}
