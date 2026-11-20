@@ -437,7 +437,7 @@ export default function JoeyPortfolio() {
                   View Projects
                 </a>
                 <a
-                  href="/Joey_Miral_CV.pdf"
+                  href="/Joey_Miral_AI_Application_Developer.pdf"
                   download
                   className="px-7 py-3.5"
                   style={{ border: `1px solid ${T.line}`, color: T.textPrimary }}
@@ -535,6 +535,105 @@ export default function JoeyPortfolio() {
 
                 <div className="flex flex-wrap gap-3 mt-4" style={{ fontFamily: FONT_MONO, fontSize: 12 }}>
                   {["Next.js", "TypeScript", "FastAPI", "LangChain", "Groq", "Google Calendar API"].map((tech) => (
+                    <span key={tech} className="px-3 py-1.5" style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        </FadeInSection>
+
+        {/* Featured Project — Notes RAG */}
+        <FadeInSection>
+          <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
+            <SectionTag index="03" label="CASE STUDY" />
+
+            <h2 className="text-5xl font-semibold" style={{ color: T.textPrimary }}>
+              Notes RAG
+            </h2>
+
+            <p className="max-w-2xl mt-4" style={{ color: T.textSecondary }}>
+              A retrieval-augmented generation app for answering AWS architecture questions with cited sources.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-8 mt-10">
+              <BracketFrame className="flex flex-col">
+                <div
+                  className="relative overflow-hidden min-h-[304px] p-8 flex flex-col justify-between"
+                  style={{ background: T.surface }}
+                >
+                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>notes-rag / retrieval pipeline</p>
+                  <div className="space-y-4 my-8" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
+                    {["PDF notes", "Chunk + embed", "ChromaDB search", "Claude answer"].map((step, index) => (
+                      <div
+                        key={step}
+                        className="flex items-center gap-4"
+                        style={{ color: index === 3 ? T.signal : T.textPrimary }}
+                      >
+                        <span
+                          className="w-7 h-7 shrink-0 flex items-center justify-center"
+                          style={{ border: `1px solid ${index === 3 ? T.signal : T.line}` }}
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span>{step}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.textSecondary }}>Answer + source citation</p>
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: `linear-gradient(180deg, rgba(${T.overlayRgb},0) 40%, rgba(${T.overlayRgb},0.7) 75%, rgba(${T.overlayRgb},0.96) 100%)`,
+                    }}
+                  />
+                </div>
+                <div className="px-8 pb-8 -mt-6 relative">
+                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>Notes RAG · 2026</p>
+                  <p className="mt-3 max-w-md text-lg leading-relaxed" style={{ color: T.textPrimary }}>
+                    Search framework guidance and receive a grounded answer with the exact source attached.
+                  </p>
+                  <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
+                    <a
+                      href="https://github.com/jMiral09/notes-rag"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 underline underline-offset-4 transition-opacity hover:opacity-75"
+                      style={{ color: T.textPrimary }}
+                    >
+                      View on GitHub
+                      <ArrowUpRight size={15} aria-hidden="true" />
+                    </a>
+                    <a href="#contact" className="transition-opacity hover:opacity-75" style={{ color: T.textSecondary }}>
+                      Ask me about the project
+                    </a>
+                  </div>
+                </div>
+              </BracketFrame>
+
+              <div>
+                <div className="grid sm:grid-cols-2 gap-8">
+                  <div>
+                    <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>My contribution</p>
+                    <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
+                      Solo project. I built the ingestion pipeline, vector retrieval, FastAPI endpoints, evaluation harness, and source-citation flow.
+                    </p>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>How it works</p>
+                    <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
+                      PDFs are extracted and chunked, embedded locally, then retrieved from ChromaDB. Claude generates the answer and cites the matching AWS Well-Architected pillar and page.
+                    </p>
+                  </div>
+                </div>
+
+                <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal, marginTop: 36 }}>Built with</p>
+
+                <div className="flex flex-wrap gap-3 mt-4" style={{ fontFamily: FONT_MONO, fontSize: 12 }}>
+                  {["Python", "FastAPI", "ChromaDB", "Sentence Transformers", "Claude", "pytest"].map((tech) => (
                     <span key={tech} className="px-3 py-1.5" style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}>
                       {tech}
                     </span>
@@ -937,11 +1036,11 @@ export default function JoeyPortfolio() {
 
               <div className="flex flex-col gap-5">
                 <BracketFrame className="flex-1 min-h-[220px] overflow-hidden">
-                  <iframe src="/Joey_Miral_CV.pdf" title="Joey Miral CV" className="w-full h-full min-h-[220px]" />
+                  <iframe src="/Joey_Miral_AI_Application_Developer.pdf" title="Joey Miral CV" className="w-full h-full min-h-[220px]" />
                 </BracketFrame>
                 <a
-                  href="/Joey_Miral_CV.pdf"
-                  download="Joey_Miral_CV.pdf"
+                  href="/Joey_Miral_AI_Application_Developer.pdf"
+                  download="Joey_Miral_AI_Application_Developer.pdf"
                   className="py-3 text-center transition-colors duration-200"
                   style={{ fontFamily: FONT_MONO, fontSize: 13, border: `1px solid ${T.line}`, color: T.textPrimary }}
                   onMouseEnter={(e) => (e.currentTarget.style.borderColor = T.signal)}
