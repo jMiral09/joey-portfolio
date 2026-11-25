@@ -545,17 +545,17 @@ export default function JoeyPortfolio() {
           </section>
         </FadeInSection>
 
-        {/* Featured Project — Notes RAG */}
+        {/* Featured Project — Papertrail */}
         <FadeInSection>
           <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
             <SectionTag index="03" label="CASE STUDY" />
 
             <h2 className="text-5xl font-semibold" style={{ color: T.textPrimary }}>
-              Notes RAG
+              Papertrail
             </h2>
 
             <p className="max-w-2xl mt-4" style={{ color: T.textSecondary }}>
-              A retrieval-augmented generation app for answering AWS architecture questions with cited sources.
+              A local-first RAG workspace for uploading PDFs and asking questions grounded in their contents.
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 mt-10">
@@ -564,9 +564,9 @@ export default function JoeyPortfolio() {
                   className="relative overflow-hidden min-h-[304px] p-8 flex flex-col justify-between"
                   style={{ background: T.surface }}
                 >
-                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>notes-rag / retrieval pipeline</p>
+                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>papertrail / local rag pipeline</p>
                   <div className="space-y-4 my-8" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
-                    {["PDF notes", "Chunk + embed", "ChromaDB search", "Claude answer"].map((step, index) => (
+                    {["Upload PDF", "Durable ingestion", "Qdrant retrieval", "Ollama answer"].map((step, index) => (
                       <div
                         key={step}
                         className="flex items-center gap-4"
@@ -582,7 +582,7 @@ export default function JoeyPortfolio() {
                       </div>
                     ))}
                   </div>
-                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.textSecondary }}>Answer + source citation</p>
+                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.textSecondary }}>Grounded answer + source files</p>
                   <div
                     aria-hidden="true"
                     className="absolute inset-0 pointer-events-none"
@@ -592,13 +592,13 @@ export default function JoeyPortfolio() {
                   />
                 </div>
                 <div className="px-8 pb-8 -mt-6 relative">
-                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>Notes RAG · 2026</p>
+                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>Papertrail · 2026</p>
                   <p className="mt-3 max-w-md text-lg leading-relaxed" style={{ color: T.textPrimary }}>
-                    Search framework guidance and receive a grounded answer with the exact source attached.
+                    Upload a PDF, index it locally, and chat with the document while reviewing the source filenames used for each answer.
                   </p>
                   <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
                     <a
-                      href="https://github.com/jMiral09/notes-rag"
+                      href="https://github.com/jMiral09/rag-production-app"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 underline underline-offset-4 transition-opacity hover:opacity-75"
@@ -619,13 +619,13 @@ export default function JoeyPortfolio() {
                   <div>
                     <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>My contribution</p>
                     <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
-                      Solo project. I built the ingestion pipeline, vector retrieval, FastAPI endpoints, evaluation harness, and source-citation flow.
+                      Solo project. I built the Next.js chat interface, FastAPI API, durable PDF ingestion workflow, vector search, and source-display flow.
                     </p>
                   </div>
                   <div>
                     <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>How it works</p>
                     <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
-                      PDFs are extracted and chunked, embedded locally, then retrieved from ChromaDB. Claude generates the answer and cites the matching AWS Well-Architected pillar and page.
+                      FastAPI validates and stores a PDF, then queues an Inngest ingestion event. Ollama embeddings are written to Qdrant, and later questions retrieve matching passages before a local Ollama model generates the answer.
                     </p>
                   </div>
                 </div>
@@ -633,7 +633,7 @@ export default function JoeyPortfolio() {
                 <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal, marginTop: 36 }}>Built with</p>
 
                 <div className="flex flex-wrap gap-3 mt-4" style={{ fontFamily: FONT_MONO, fontSize: 12 }}>
-                  {["Python", "FastAPI", "ChromaDB", "Sentence Transformers", "Claude", "pytest"].map((tech) => (
+                  {["Next.js", "TypeScript", "Python", "FastAPI", "Inngest", "Ollama", "Qdrant"].map((tech) => (
                     <span key={tech} className="px-3 py-1.5" style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}>
                       {tech}
                     </span>
