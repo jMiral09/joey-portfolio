@@ -25,7 +25,7 @@ export default function FadeInSection({ children, className = "" }) {
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(40px)",
+        transform: visible ? "none" : "translateY(40px)",
         transition: "opacity 0.9s ease, transform 0.9s ease",
       }}
     >

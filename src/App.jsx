@@ -18,34 +18,34 @@ import {
 } from "lucide-react";
 import FadeInSection from "./components/FadeInSection";
 
-const FONT_DISPLAY = "'Space Grotesk', sans-serif";
+const FONT_DISPLAY = "'Onest', 'Arial', sans-serif";
 const FONT_MONO = "'JetBrains Mono', monospace";
 
 // ---- Theme tokens: same structural system, two surfaces ----
 const THEMES = {
   dark: {
-    base: "#0A0A0C",
-    surface: "#131417",
-    line: "#26282D",
-    lineSoft: "#1B1C20",
-    textPrimary: "#E7E8EA",
-    textSecondary: "#8A8D93",
-    signal: "#5EEAD4",
-    signalRgb: "94,234,212",
-    signalContrast: "#0A0A0C", // text color to use on top of a signal-filled surface
-    overlayRgb: "10,10,12",
+    base: "#090A0F",
+    surface: "#11131A",
+    line: "#343641",
+    lineSoft: "#1C1E27",
+    textPrimary: "#F5F4F0",
+    textSecondary: "#AAA9B1",
+    signal: "#44D7C4",
+    signalRgb: "68,215,196",
+    signalContrast: "#071B1C",
+    overlayRgb: "7,27,28",
   },
   light: {
-    base: "#FAFAF8",
+    base: "#F7F7F2",
     surface: "#FFFFFF",
-    line: "#DCDCD8",
-    lineSoft: "#EDEDEA",
-    textPrimary: "#121212",
-    textSecondary: "#63666B",
-    signal: "#0E7C74", // deeper teal so it holds contrast on white
-    signalRgb: "14,124,116",
-    signalContrast: "#FFFFFF", // text color to use on top of a signal-filled surface
-    overlayRgb: "250,250,248",
+    line: "#D7D7CF",
+    lineSoft: "#ECECE5",
+    textPrimary: "#14211F",
+    textSecondary: "#68736F",
+    signal: "#18A999",
+    signalRgb: "24,169,153",
+    signalContrast: "#FFFFFF",
+    overlayRgb: "239,251,248",
   },
 };
 
@@ -53,36 +53,28 @@ const nav = ["About", "Experience", "Skills", "Projects", "Contact"];
 
 const skills = [
   {
-    title: "UI/UX Design",
+    title: "Product & Interface",
     items: ["Figma", "FigJam", "Adobe XD", "Wireframing", "Prototyping", "Design Systems"],
   },
   {
-    title: "Programming Languages & Frameworks",
+    title: "Web Development",
     items: ["React", "Next.js", "TailwindCSS", "HTML", "CSS", "JavaScript", "Python", "Java-Spring Boot"],
   },
   {
-    title: "Web Performance & SEO",
+    title: "Web Quality & Analytics",
     items: ["On-Page SEO", "Google Analytics (GA4)", "Google Tag Manager", "Lighthouse Audits", "Accessibility (WCAG)"],
   },
   {
-    title: "Database",
-    items: ["MySQL", "PostgreSQL", "SQL Server"],
+    title: "Data & Cloud",
+    items: ["MySQL", "PostgreSQL", "SQL Server", "AWS", "Google Cloud", "Azure"],
   },
   {
-    title: "Operating Systems",
-    items: ["Windows", "macOS", "Linux"],
-  },
-  {
-    title: "Cloud & DevOps",
-    items: ["AWS", "Google Cloud", "Azure"],
+    title: "Platforms & Operations",
+    items: ["Windows", "macOS", "Linux", "Control-M", "Mochasoft TN3270", "WinSCP", "Putty", "Filezilla", "Finastra Fusion OPICS", "FIS", "Oracle Datawarehouse"],
   },
   {
     title: "Tools & Collaboration",
     items: ["Git", "GitHub", "GitHub Actions", "GitLab", "Slack", "Claude Code"],
-  },
-  {
-    title: "IT Operations & Compliance",
-    items: ["Control-M", "Mochasoft TN3270", "WinSCP", "Putty", "Filezilla", "Finastra Fusion OPICS", "FIS", "Oracle Datawarehouse"],
   },
 ];
 
@@ -129,6 +121,40 @@ const projects = [
   },
 ];
 
+const projectColors = [
+  { background: "#2B50D9", foreground: "#FFFFFF", accent: "#B7F34A" },
+  { background: "#151619", foreground: "#F7F6F1", accent: "#44D7C4" },
+  { background: "#F4D158", foreground: "#171717", accent: "#FF4D98" },
+  { background: "#F34D91", foreground: "#171217", accent: "#FFE36A" },
+];
+
+const featuredProjects = [
+  {
+    name: "Calendar Agent",
+    category: "AI / FULL-STACK",
+    image: "/images/calendar_agent_thumbnail.webp",
+    alt: "Calendar Agent chat listing tomorrow's events from Google Calendar",
+    summary: "A full-stack AI assistant that turns plain-language requests into Google Calendar events.",
+    contribution: "Solo project. I designed the architecture and built the chat interface, API layer, and calendar agent with its tools.",
+    process: "A React chat sends requests through a Next.js API route to a FastAPI backend. An LLM agent uses calendar tools to create events and reply with a confirmation.",
+    tech: ["Next.js", "TypeScript", "FastAPI", "LangChain", "Groq", "Google Calendar API"],
+    link: "https://github.com/jMiral09/calendar-agent",
+    cta: "View on GitHub",
+  },
+  {
+    name: "Papertrail",
+    category: "AI / DOCUMENT WORKSPACE",
+    image: "/images/papertrail-document-search.jpg",
+    alt: "Papertrail document assistant interface with a PDF library and AI chat",
+    summary: "A local-first RAG workspace for uploading PDFs and asking questions grounded in their contents.",
+    contribution: "Solo project. I built the Next.js chat interface, FastAPI API, durable PDF ingestion workflow, vector search, and source-display flow.",
+    process: "FastAPI validates and stores PDFs, then queues Inngest ingestion. Ollama embeddings are written to Qdrant; questions retrieve matching passages before a local model generates an answer.",
+    tech: ["Next.js", "TypeScript", "Python", "FastAPI", "Inngest", "Ollama", "Qdrant"],
+    link: "https://github.com/jMiral09/rag-production-app",
+    cta: "View on GitHub",
+  },
+];
+
 const musicLinks = [
   {
     label: "Spotify",
@@ -147,17 +173,75 @@ const musicLinks = [
 export default function JoeyPortfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
+  const [contactStep, setContactStep] = useState(1);
+  const [contactStatus, setContactStatus] = useState("idle");
+  const [contactError, setContactError] = useState("");
   const [theme, setTheme] = useState(() => {
-    if (typeof window === "undefined") return "dark";
-    return window.localStorage.getItem("jm-theme") || "dark";
+    if (typeof window === "undefined") return "light";
+    return window.localStorage.getItem("jm-theme-v2") || "light";
   });
 
   const isDark = theme === "dark";
   const T = THEMES[theme];
+
+  const updateContactField = (field, value) => {
+    setContactForm((current) => ({ ...current, [field]: value }));
+    setContactStatus("idle");
+    setContactError("");
+  };
+
+  const continueContactForm = () => {
+    if (!contactForm.message.trim()) {
+      setContactError("Add a message before continuing.");
+      return;
+    }
+
+    setContactError("");
+    setContactStep(2);
+  };
+
+  const handleContactSubmit = async (event) => {
+    event.preventDefault();
+    setContactStatus("sending");
+    setContactError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: contactForm.name.trim(),
+          email: contactForm.email.trim(),
+          message: contactForm.message.trim(),
+        }),
+      });
+
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        throw new Error("The email service returned an unreadable response.");
+      }
+
+      if (!response.ok) {
+        throw new Error(result.error || "Could not send your message.");
+      }
+      if (result.success !== true) {
+        throw new Error("The email service did not confirm delivery.");
+      }
+
+      setContactStatus("success");
+    } catch (error) {
+      console.error("Contact form submission failed:", error);
+      setContactStatus("error");
+      setContactError(
+        error instanceof Error
+          ? error.message
+          : "Could not send your message. Please try again or email me directly."
+      );
+    }
+  };
 
   // small local helpers that read the active theme --------------------
   const SectionTag = ({ index, label }) => (
@@ -191,7 +275,7 @@ export default function JoeyPortfolio() {
     </div>
   );
 
-  // Load the two typefaces the redesign relies on.
+  // Load the typefaces the redesign relies on.
   // Prefer moving this <link> into index.html <head> instead — this is a
   // convenience fallback so the component works standalone.
   useEffect(() => {
@@ -201,12 +285,12 @@ export default function JoeyPortfolio() {
     link.id = id;
     link.rel = "stylesheet";
     link.href =
-      "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap";
+      "https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=Permanent+Marker&family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;700&display=swap";
     document.head.appendChild(link);
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("jm-theme", theme);
+    window.localStorage.setItem("jm-theme-v2", theme);
   }, [theme]);
 
   useEffect(() => {
@@ -223,43 +307,16 @@ export default function JoeyPortfolio() {
     return () => window.removeEventListener("scroll", updateNavigation);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSending(true);
-    setError(false);
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      if (response.ok) {
-        setSent(true);
-        setForm({ name: "", email: "", message: "" });
-        setTimeout(() => setSent(false), 3000);
-      } else {
-        setError(true);
-      }
-    } catch (err) {
-      console.error("Error submitting form:", err);
-      setError(true);
-    } finally {
-      setSending(false);
-    }
-  };
-
   return (
     <div
+      data-theme={theme}
+      className="jm-portfolio relative w-full"
       style={{
-        background: T.base,
         color: T.textPrimary,
         minHeight: "100vh",
         fontFamily: FONT_DISPLAY,
         transition: "background-color 300ms ease, color 300ms ease",
       }}
-      className="relative w-full overflow-hidden"
     >
       {/* faint background grid, fixed behind everything */}
       <div
@@ -385,74 +442,43 @@ export default function JoeyPortfolio() {
             className="relative px-6 pb-20 pt-36 md:px-16 lg:px-24 xl:px-32 md:pb-24 md:pt-44 min-h-[90vh] flex flex-col justify-between"
             style={{ borderBottom: `1px solid ${T.line}` }}
           >
-            <div className="flex-1 flex flex-col justify-center max-w-3xl">
-              <SectionTag index="00" label="HERO" />
-
-              <h1
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.95] font-semibold"
-                style={{ color: T.textPrimary, letterSpacing: "-2px" }}
-              >
-                Joey
-                <br />
-                Miral
-                <span
-                  aria-hidden="true"
-                  style={{
-                    display: "inline-block",
-                    width: "0.35em",
-                    height: "0.7em",
-                    background: T.signal,
-                    marginLeft: 10,
-                    animation: "jm-blink 1s step-end infinite",
-                    verticalAlign: "-0.05em",
-                  }}
-                />
+            <div className="jm-hero-content">
+              <div className="jm-hero-stickers" aria-hidden="true">
+                <span>MADE THINGS</span>
+                <span>SWEAT THE DETAILS</span>
+              </div>
+              <span className="jm-hero-intro">my name is</span>
+              <h1 className="jm-hero-title" style={{ color: T.textPrimary }}>
+                Joey <span>Miral</span>
+                <span className="jm-hero-cursor" aria-hidden="true" />
               </h1>
-
-              <p className="mt-6 max-w-xl text-2xl md:text-3xl font-semibold leading-tight" style={{ color: T.textPrimary }}>
-                I turn complex problems into interfaces that feel simple.
+              <div className="jm-hero-status" style={{ fontFamily: FONT_MONO }}>
+                <span aria-hidden="true" />
+                OPEN TO NEW WORK AND GOOD PROBLEMS
+              </div>
+              <p className="jm-hero-statement" style={{ color: T.textPrimary }}>
+                AI Engineering · ML &amp; Data Science
               </p>
-
-              <p className="mt-4 max-w-xl text-lg md:text-xl leading-relaxed" style={{ color: T.textSecondary }}>
-                UI/UX designer crafting clear, user-centered interfaces — backed by
-                Full-Stack development skills to help ideas hold up in the real world.
+              <p className="jm-hero-description" style={{ color: T.textSecondary }}>
+                Currently pursuing AI development through hands-on projects and learning,
+                with a UI/UX development background focused on making intelligent products intuitive.
               </p>
-
-              <div className="flex gap-4 mt-8 flex-wrap" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
-                <a
-                  href="#projects"
-                  className="px-7 py-3.5 transition-colors duration-200"
-                  style={{ background: T.textPrimary, color: T.base, border: `1px solid ${T.textPrimary}` }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = T.signal;
-                    e.currentTarget.style.borderColor = T.signal;
-                    e.currentTarget.style.color = isDark ? T.base : "#FFFFFF";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = T.textPrimary;
-                    e.currentTarget.style.borderColor = T.textPrimary;
-                    e.currentTarget.style.color = T.base;
-                  }}
-                >
-                  View Projects
+              <div className="jm-hero-actions" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
+                <a href="#contact" className="jm-hero-contact">
+                  <span aria-hidden="true">↗</span> Contact Me
                 </a>
-                <a
-                  href="/Joey_Miral_AI_Application_Developer.pdf"
-                  download
-                  className="px-7 py-3.5"
-                  style={{ border: `1px solid ${T.line}`, color: T.textPrimary }}
-                >
-                  Download CV
-                </a>
+                <a href="#projects" className="jm-hero-projects">View Projects</a>
+                <a href="/Joey_Miral_AI_Application_Developer.pdf" download className="jm-hero-cv">Download CV</a>
               </div>
             </div>
 
             <div
-              className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-10 mt-10"
+              className="jm-hero-meta flex flex-wrap items-center gap-x-8 gap-y-3 pt-10 mt-10"
               style={{ borderTop: `1px solid ${T.line}`, fontFamily: FONT_MONO, fontSize: 13 }}
             >
-              <span style={{ color: T.textPrimary }}>UI/UX Design</span>
-              <span style={{ color: T.textPrimary }}>Full-Stack Development</span>
+              <span style={{ color: T.textPrimary }}>AI Engineering</span>
+              <span style={{ color: T.textPrimary }}>ML &amp; Data Science</span>
+              <span style={{ color: T.textPrimary }}>UI/UX Development</span>
               <span style={{ color: T.textSecondary }}>Cum Laude · TUP</span>
               <span style={{ color: T.textSecondary }}>Figma & Design Systems</span>
               <span style={{ color: T.textSecondary }}>Metro Manila, PH</span>
@@ -460,186 +486,72 @@ export default function JoeyPortfolio() {
           </section>
         </FadeInSection>
 
-        {/* Featured Project — Calendar Agent */}
-        <FadeInSection>
-          <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
-            <SectionTag index="02" label="CASE STUDY" />
-
-            <h2 className="text-5xl font-semibold" style={{ color: T.textPrimary }}>
-              Calendar Agent
-            </h2>
-
-            <p className="max-w-2xl mt-4" style={{ color: T.textSecondary }}>
-              A full-stack AI assistant that turns plain-language requests into Google Calendar events.
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-8 mt-10">
-              <BracketFrame className="flex flex-col">
-                <div className="relative overflow-hidden">
-                  <img
-                    src="/images/calendar_agent_thumbnail.webp"
-                    alt="Calendar Agent chat listing tomorrow's events from Google Calendar"
-                    width={436}
-                    height={304}
-                    loading="lazy"
-                    className="w-full h-auto opacity-90"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background: `linear-gradient(180deg, rgba(${T.overlayRgb},0) 40%, rgba(${T.overlayRgb},0.7) 75%, rgba(${T.overlayRgb},0.96) 100%)`,
-                    }}
-                  />
-                </div>
-                <div className="px-8 pb-8 -mt-6 relative">
-                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>Calendar Agent · 2026</p>
-                  <p className="mt-3 max-w-md text-lg leading-relaxed" style={{ color: T.textPrimary }}>
-                    Describe a meeting in one sentence. The agent works out the date and books it.
-                  </p>
-                  <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
-                    <a
-                      href="https://github.com/jMiral09/calendar-agent"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 underline underline-offset-4 transition-opacity hover:opacity-75"
-                      style={{ color: T.textPrimary }}
-                    >
-                      View on GitHub
-                      <ArrowUpRight size={15} aria-hidden="true" />
-                    </a>
-                    <a href="#contact" className="transition-opacity hover:opacity-75" style={{ color: T.textSecondary }}>
-                      Ask me about the project
-                    </a>
-                  </div>
-                </div>
-              </BracketFrame>
-
-              <div>
-                <div className="grid sm:grid-cols-2 gap-8">
-                  <div>
-                    <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>My contribution</p>
-                    <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
-                      Solo project. I designed the architecture and built the chat interface, the API layer, and the calendar agent with its tools.
-                    </p>
-                  </div>
-                  <div>
-                    <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>How it works</p>
-                    <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
-                      A React chat sends the request through a Next.js API route to a FastAPI backend, where an LLM agent uses calendar tools to create the event in Google Calendar and reply with a confirmation.
-                    </p>
-                  </div>
-                </div>
-
-                <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal, marginTop: 36 }}>Built with</p>
-
-                <div className="flex flex-wrap gap-3 mt-4" style={{ fontFamily: FONT_MONO, fontSize: 12 }}>
-                  {["Next.js", "TypeScript", "FastAPI", "LangChain", "Groq", "Google Calendar API"].map((tech) => (
-                    <span key={tech} className="px-3 py-1.5" style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+        <div className="jm-ticker" aria-hidden="true">
+          <div className="jm-ticker-track">
+            {[0, 1].map((group) => (
+              <div className="jm-ticker-group" key={group}>
+                <span>AI Engineering</span><b>✦</b>
+                <span>ML &amp; Data Science</span><b>✦</b>
+                <span>UI/UX Development</span><b>✦</b>
+                <span>Creative Technology</span><b>✦</b>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* FEATURED WORK */}
+        <FadeInSection>
+          <section className="jm-featured-section px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
+            <div className="jm-featured-heading">
+              <span className="jm-handwritten">a few things I made</span>
+              <h2 style={{ color: T.textPrimary }}>Featured Works</h2>
+              <p style={{ color: T.textSecondary }}>Design, code, and ideas made tangible.</p>
             </div>
-          </section>
-        </FadeInSection>
 
-        {/* Featured Project — Papertrail */}
-        <FadeInSection>
-          <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
-            <SectionTag index="03" label="CASE STUDY" />
+            <div className="jm-featured-grid">
+              {featuredProjects.map((project, index) => (
+                <article className="jm-featured-card" key={project.name} style={{ background: T.surface, borderColor: T.line }}>
+                  <div className="jm-featured-tab" style={{ background: T.lineSoft, color: T.textPrimary }}>
+                    <span>✦ PROJECT {String(index + 1).padStart(2, "0")}</span>
+                    <span>{project.category}</span>
+                  </div>
 
-            <h2 className="text-5xl font-semibold" style={{ color: T.textPrimary }}>
-              Papertrail
-            </h2>
+                  <div className="jm-featured-image">
+                    <img
+                      src={project.image}
+                      alt={project.alt}
+                      loading="lazy"
+                    />
+                  </div>
 
-            <p className="max-w-2xl mt-4" style={{ color: T.textSecondary }}>
-              A local-first RAG workspace for uploading PDFs and asking questions grounded in their contents.
-            </p>
+                  <div className="jm-featured-info">
+                    <span className="jm-featured-category" style={{ color: T.signal }}>{project.category}</span>
+                    <h3 style={{ color: T.textPrimary }}>{project.name}</h3>
+                    <p style={{ color: T.textSecondary }}>{project.summary}</p>
 
-            <div className="grid md:grid-cols-2 gap-8 mt-10">
-              <BracketFrame className="flex flex-col">
-                <div
-                  className="relative overflow-hidden min-h-[304px] p-8 flex flex-col justify-between"
-                  style={{ background: T.surface }}
-                >
-                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>papertrail / local rag pipeline</p>
-                  <div className="space-y-4 my-8" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
-                    {["Upload PDF", "Durable ingestion", "Qdrant retrieval", "Ollama answer"].map((step, index) => (
-                      <div
-                        key={step}
-                        className="flex items-center gap-4"
-                        style={{ color: index === 3 ? T.signal : T.textPrimary }}
-                      >
-                        <span
-                          className="w-7 h-7 shrink-0 flex items-center justify-center"
-                          style={{ border: `1px solid ${index === 3 ? T.signal : T.line}` }}
-                        >
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span>{step}</span>
+                    <div className="jm-featured-tech">
+                      {project.tech.map((tech) => (
+                        <span key={tech} style={{ borderColor: T.line, color: T.textSecondary }}>{tech}</span>
+                      ))}
+                    </div>
+
+                    <details className="jm-featured-details" style={{ borderColor: T.line }}>
+                      <summary style={{ color: T.textPrimary }}>Behind the build</summary>
+                      <div>
+                        <p><strong>My contribution</strong> {project.contribution}</p>
+                        <p><strong>How it works</strong> {project.process}</p>
                       </div>
-                    ))}
-                  </div>
-                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.textSecondary }}>Grounded answer + source files</p>
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background: `linear-gradient(180deg, rgba(${T.overlayRgb},0) 40%, rgba(${T.overlayRgb},0.7) 75%, rgba(${T.overlayRgb},0.96) 100%)`,
-                    }}
-                  />
-                </div>
-                <div className="px-8 pb-8 -mt-6 relative">
-                  <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>Papertrail · 2026</p>
-                  <p className="mt-3 max-w-md text-lg leading-relaxed" style={{ color: T.textPrimary }}>
-                    Upload a PDF, index it locally, and chat with the document while reviewing the source filenames used for each answer.
-                  </p>
-                  <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3" style={{ fontFamily: FONT_MONO, fontSize: 13 }}>
-                    <a
-                      href="https://github.com/jMiral09/rag-production-app"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 underline underline-offset-4 transition-opacity hover:opacity-75"
-                      style={{ color: T.textPrimary }}
-                    >
-                      View on GitHub
-                      <ArrowUpRight size={15} aria-hidden="true" />
-                    </a>
-                    <a href="#contact" className="transition-opacity hover:opacity-75" style={{ color: T.textSecondary }}>
-                      Ask me about the project
-                    </a>
-                  </div>
-                </div>
-              </BracketFrame>
+                    </details>
 
-              <div>
-                <div className="grid sm:grid-cols-2 gap-8">
-                  <div>
-                    <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>My contribution</p>
-                    <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
-                      Solo project. I built the Next.js chat interface, FastAPI API, durable PDF ingestion workflow, vector search, and source-display flow.
-                    </p>
+                    <div className="jm-featured-links">
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: T.textPrimary }}>
+                        {project.cta} <ArrowUpRight size={16} aria-hidden="true" />
+                      </a>
+                      <a href="#contact" style={{ color: T.textSecondary }}>Ask me about it</a>
+                    </div>
                   </div>
-                  <div>
-                    <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>How it works</p>
-                    <p className="mt-3 leading-relaxed" style={{ color: T.textSecondary }}>
-                      FastAPI validates and stores a PDF, then queues an Inngest ingestion event. Ollama embeddings are written to Qdrant, and later questions retrieve matching passages before a local Ollama model generates the answer.
-                    </p>
-                  </div>
-                </div>
-
-                <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal, marginTop: 36 }}>Built with</p>
-
-                <div className="flex flex-wrap gap-3 mt-4" style={{ fontFamily: FONT_MONO, fontSize: 12 }}>
-                  {["Next.js", "TypeScript", "Python", "FastAPI", "Inngest", "Ollama", "Qdrant"].map((tech) => (
-                    <span key={tech} className="px-3 py-1.5" style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                </article>
+              ))}
             </div>
           </section>
         </FadeInSection>
@@ -691,8 +603,8 @@ export default function JoeyPortfolio() {
                 </p>
 
                 <p className="mt-4 leading-relaxed" style={{ color: T.textSecondary }}>
-                  Currently, I'm pursuing AI and Machine Learning to expand my skill set 
-                  and explore new possibilities in the field of technology.
+                  Currently, I'm pursuing AI development with a focus on AI Engineering,
+                  Machine Learning, and Data Science through hands-on projects and continued learning.
                 </p>
 
                 <div className="mt-8 space-y-5 pt-6" style={{ borderTop: `1px solid ${T.line}` }}>
@@ -763,52 +675,66 @@ export default function JoeyPortfolio() {
           <section id="experience" className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
             <SectionTag index="04" label="EXPERIENCE" />
             <h2 className="text-5xl font-semibold mb-12" style={{ color: T.textPrimary }}>
-              Experience
+              Field Notes
             </h2>
 
-            <div style={{ borderTop: `1px solid ${T.line}` }}>
+            <ol
+              className="jm-experience-list"
+              style={{ "--jm-accent": T.signal, "--jm-experience-line": T.line }}
+            >
               {[
                 {
                   org: "Metropolitan Bank & Trust Company",
                   role: "Computer Operator — Data & IT Operations",
-                  period: "July 2024 – June 2026 | On-site",
+                  period: "July 2024 – June 2026",
+                  setting: "On-site",
                   blurb:
                     "Monitored live batch jobs and transaction pipelines under strict SLAs, tracing failures to root cause and running performance/latency testing to flag issues for the dev team.",
                 },
                 {
                   org: "ScoutStaff Inc.",
                   role: "Java Development Engineer",
-                  period: "October 2023 – April 2024 | On-site",
+                  period: "October 2023 – April 2024",
+                  setting: "On-site",
                   blurb:
                     "Built and maintained RESTful APIs with Spring Boot, working with stakeholders on requirements and testing via Postman and Docker in Agile sprints.",
                 },
                 {
                   org: "4Gives Finance",
                   role: "Database Designer Intern (Data Team)",
-                  period: "March 2023 – June 2023 | Remote",
+                  period: "March 2023 – June 2023",
+                  setting: "Remote",
                   blurb:
                     "Designed a normalized Sales Report database from scratch for a fintech project, documenting the schema via ER diagrams for the dev team.",
                 },
               ].map((job, i) => (
-                <div
-                  key={job.org}
-                  className="grid md:grid-cols-[60px_1fr_auto] items-start gap-4 py-6"
-                  style={{ borderBottom: `1px solid ${T.line}` }}
-                >
-                  <span style={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textSecondary }}>
+                <li className="jm-experience-item" key={job.org}>
+                  <span
+                    className="jm-experience-index"
+                    aria-hidden="true"
+                    style={{ background: T.signal, color: T.signalContrast }}
+                  >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-semibold" style={{ color: T.textPrimary }}>{job.org}</h3>
-                    <p className="mt-0.5" style={{ color: T.textSecondary }}>{job.role}</p>
-                    <p className="mt-3 max-w-2xl text-sm leading-relaxed" style={{ color: T.textSecondary }}>
+                  <article
+                    className="jm-experience-card"
+                    style={{ background: T.surface, borderColor: T.line }}
+                  >
+                    <div className="jm-experience-meta" style={{ color: T.textSecondary }}>
+                      <span>{job.period}</span>
+                      <span className="jm-experience-setting" style={{ borderColor: T.line }}>
+                        {job.setting}
+                      </span>
+                    </div>
+                    <h3 style={{ color: T.textPrimary }}>{job.org}</h3>
+                    <p className="jm-experience-role" style={{ color: T.signal }}>{job.role}</p>
+                    <p className="jm-experience-description" style={{ color: T.textSecondary }}>
                       {job.blurb}
                     </p>
-                  </div>
-                  <span style={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textSecondary }}>{job.period}</span>
-                </div>
+                  </article>
+                </li>
               ))}
-            </div>
+            </ol>
           </section>
         </FadeInSection>
 
@@ -817,34 +743,36 @@ export default function JoeyPortfolio() {
           <section id="skills" className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
             <SectionTag index="05" label="SKILLS" />
             <h2 className="text-4xl md:text-5xl font-semibold" style={{ color: T.textPrimary }}>
-              Skills
+              The Toolbox
             </h2>
             <p className="max-w-2xl mt-3 text-sm md:text-base" style={{ color: T.textSecondary }}>
-              The disciplines I move between depending on what a project needs —
-              from the interface down to the infrastructure underneath it.
+              A flexible mix of design, development, and systems skills I bring to a project.
             </p>
 
-            <div style={{ borderTop: `1px solid ${T.line}`, marginTop: 40 }}>
+            <div className="jm-skills-grid">
               {skills.map((skill, i) => (
-                <div
+                <article
                   key={skill.title}
-                  className="grid md:grid-cols-[60px_260px_1fr] gap-6 py-7 items-start"
-                  style={{ borderBottom: `1px solid ${T.line}` }}
+                  className="jm-skill-card"
+                  style={{ background: T.surface, borderColor: T.line }}
                 >
-                  <span style={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textSecondary }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-semibold" style={{ color: T.textPrimary }}>
-                    {skill.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-2" style={{ fontFamily: FONT_MONO, fontSize: 12 }}>
+                  <div className="jm-skill-card-heading">
+                    <span style={{ color: T.signal, fontFamily: FONT_MONO, fontSize: 12 }}>
+                      / {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span style={{ color: T.textSecondary, fontFamily: FONT_MONO, fontSize: 10 }}>
+                      TOOLKIT
+                    </span>
+                  </div>
+                  <h3 style={{ color: T.textPrimary }}>{skill.title}</h3>
+                  <div className="jm-skill-chips">
                     {skill.items.map((item) => (
-                      <span key={item} className="px-3 py-1.5" style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}>
+                      <span key={item} style={{ borderColor: T.line, color: T.textSecondary }}>
                         {item}
                       </span>
                     ))}
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           </section>
@@ -854,216 +782,225 @@ export default function JoeyPortfolio() {
         <FadeInSection>
           <section id="projects" className="px-6 md:px-16 lg:px-24 xl:px-32 py-24" style={{ borderBottom: `1px solid ${T.line}` }}>
             <SectionTag index="06" label="PROJECTS" />
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
-              <h2 className="text-4xl md:text-5xl font-semibold" style={{ color: T.textPrimary }}>
-                Projects
-              </h2>
-              <p className="text-sm md:text-base" style={{ color: T.textSecondary }}>
-                UI design, product thinking, and development craft.
-              </p>
+            <div className="jm-projects-heading">
+              <div>
+                <span className="jm-handwritten">open my project folder ↘</span>
+                <h2 style={{ color: T.textPrimary }}>Featured<br />Projects</h2>
+              </div>
+              <div className="jm-directory-meta" style={{ color: T.textSecondary }}>
+                <span>ROOT / WORKS</span>
+                <span>{String(projects.length).padStart(2, "0")} PROJECT FILES</span>
+              </div>
             </div>
 
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 mt-12">
-              {projects.map((p) => (
-                <a
-                  key={p.name}
-                  href={p.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-full flex flex-col overflow-hidden group cursor-pointer transition-all duration-300 hover:-translate-y-1"
-                  style={{ border: `1px solid ${T.line}`, background: T.surface }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = T.signal;
-                    e.currentTarget.style.boxShadow = `0 16px 32px -12px rgba(${T.signalRgb}, 0.35)`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = T.line;
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                >
-                  {p.preview ? (
-                    <div className="overflow-hidden relative" style={{ borderBottom: `1px solid ${T.line}` }}>
-                      <img
-                        src={p.preview}
-                        alt={p.name}
-                        loading="lazy"
-                        className="w-full h-[220px] object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                        style={{ background: `rgba(${T.signalRgb}, 0.12)` }}
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      className="h-[220px] p-6 flex flex-col justify-between transition-colors duration-300"
-                      style={{ borderBottom: `1px solid ${T.line}`, color: T.textPrimary }}
+            <ul className="jm-project-directory">
+              {projects.map((p, i) => {
+                const palette = projectColors[i % projectColors.length];
+                return (
+                  <li
+                    key={p.name}
+                    className="jm-project-file"
+                    style={{ top: "140px", zIndex: i + 1 }}
+                  >
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="jm-project-panel group"
+                      style={{
+                        "--project-bg": palette.background,
+                        "--project-foreground": palette.foreground,
+                        "--project-accent": palette.accent,
+                      }}
                     >
-                      <p style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.signal }}>Code project</p>
-                      <p className="max-w-[14rem] text-2xl font-semibold leading-tight">
-                        Building the logic behind social experiences.
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="p-6 flex flex-col flex-1">
-                    <span
-                      className="inline-block w-fit px-3 py-1 transition-colors duration-300"
-                      style={{ fontFamily: FONT_MONO, fontSize: 11, border: `1px solid ${T.signal}`, color: T.signal }}
-                    >
-                      {p.tag}
-                    </span>
-
-                    <h3
-                      className="text-xl font-semibold mt-5 transition-colors duration-300 group-hover:underline"
-                      style={{ color: T.textPrimary, textDecorationColor: T.signal, textUnderlineOffset: "4px" }}
-                    >
-                      {p.name}
-                    </h3>
-
-                    {p.tech && (
-                      <div className="flex flex-wrap gap-2 mt-4" style={{ fontFamily: FONT_MONO, fontSize: 11 }}>
-                        {p.tech.map((tech) => (
-                          <span key={tech} className="px-2.5 py-1" style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}>
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <p className="text-sm leading-relaxed mt-4" style={{ color: T.textSecondary }}>
-                      {p.copy}
-                    </p>
-
-                    <div
-                      className="mt-auto pt-6 flex items-center gap-2 transition-all duration-300 group-hover:gap-3"
-                      style={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textPrimary }}
-                    >
-                      <span className="transition-colors duration-300 group-hover:text-[var(--jm-signal)]" style={{ "--jm-signal": T.signal }}>
-                        {p.cta || "View Project"}
+                      <span
+                        className="jm-project-tab"
+                        style={{ left: `${(i * 80) / projects.length}%` }}
+                      >
+                        <span>✦ PROJECT {String(i + 1).padStart(2, "0")}</span>
                       </span>
-                      <ArrowUpRight size={16} className="transition-colors duration-300 group-hover:text-[var(--jm-signal)]" style={{ "--jm-signal": T.signal }} />
-                    </div>
-                  </div>
-                </a>
-              ))}
-            </div>
+
+                      <div className="jm-project-copy">
+                        <span className="jm-project-kicker">FILE {String(i + 1).padStart(2, "0")} / {p.tag}</span>
+                        <h3>{p.name}</h3>
+                        <p>{p.copy}</p>
+                        {p.tech && (
+                          <div className="jm-project-tech">
+                            {p.tech.slice(0, 4).map((tech) => <span key={tech}>{tech}</span>)}
+                          </div>
+                        )}
+                        <span className="jm-project-cta">
+                          {p.cta || "View Project"} <ArrowUpRight size={17} aria-hidden="true" />
+                        </span>
+                      </div>
+
+                      <div className="jm-project-preview">
+                        {p.preview ? (
+                          <img
+                            src={p.preview}
+                            srcSet={p.previewSmall ? `${p.previewSmall} 480w, ${p.preview} 900w` : undefined}
+                            sizes="(max-width: 767px) 100vw, 52vw"
+                            alt={`${p.name} project preview`}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="jm-project-code-art">
+                            <span>CODE / API</span>
+                            <strong>{"{ }"}</strong>
+                            <span>BUILDING THE LOGIC<br />BEHIND SOCIAL EXPERIENCES</span>
+                          </div>
+                        )}
+                        <span className="jm-project-preview-label">OPEN FILE ↗</span>
+                      </div>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </section>
         </FadeInSection>
 
         {/* CONTACT */}
         <FadeInSection>
-          <section id="contact" className="px-6 md:px-16 lg:px-24 xl:px-32 py-24">
-            <SectionTag index="07" label="CONTACT" />
-            <h2 className="text-4xl md:text-5xl font-semibold mb-10" style={{ color: T.textPrimary }}>
-              Contact
-            </h2>
+          <section id="contact" className="jm-contact-section px-6 md:px-16 lg:px-24 xl:px-32 py-24">
+            <div className="jm-contact-heading">
+              <span className="jm-handwritten">say hi</span>
+              <div className="jm-contact-title-frame" style={{ borderColor: T.textPrimary }}>
+                <span aria-hidden="true" />
+                <span aria-hidden="true" />
+                <span aria-hidden="true" />
+                <span aria-hidden="true" />
+                <h2>Contact</h2>
+              </div>
+            </div>
 
-            <div className="grid md:grid-cols-2 gap-12">
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                <label style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.textSecondary }}>
-                  Name
-                  <input
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full mt-2 py-2 text-base outline-none bg-transparent"
-                    style={{ borderBottom: `1px solid ${T.line}`, color: T.textPrimary, fontFamily: FONT_DISPLAY }}
-                    placeholder="Your name"
-                    onFocus={(e) => (e.currentTarget.style.borderColor = T.signal)}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = T.line)}
-                  />
-                </label>
-                <label style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.textSecondary }}>
-                  Email
-                  <input
-                    required
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full mt-2 py-2 text-base outline-none bg-transparent"
-                    style={{ borderBottom: `1px solid ${T.line}`, color: T.textPrimary, fontFamily: FONT_DISPLAY }}
-                    placeholder="you@email.com"
-                    onFocus={(e) => (e.currentTarget.style.borderColor = T.signal)}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = T.line)}
-                  />
-                </label>
-                <label style={{ fontFamily: FONT_MONO, fontSize: 12, color: T.textSecondary }}>
-                  Message
-                  <textarea
-                    required
-                    rows={5}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full mt-2 py-2 text-base outline-none resize-none bg-transparent"
-                    style={{ borderBottom: `1px solid ${T.line}`, color: T.textPrimary, fontFamily: FONT_DISPLAY }}
-                    placeholder="Let's talk about..."
-                    onFocus={(e) => (e.currentTarget.style.borderColor = T.signal)}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = T.line)}
-                  />
-                </label>
-                <button
-                  type="submit"
-                  disabled={sending}
-                  className="mt-2 py-3.5 transition-colors duration-200"
-                  style={{
-                    fontFamily: FONT_MONO,
-                    fontSize: 13,
-                    border: `1px solid ${sent ? T.signal : T.textPrimary}`,
-                    color: sent ? T.signal : T.textPrimary,
-                    background: "transparent",
-                    opacity: sending ? 0.6 : 1,
-                  }}
-                  onMouseEnter={(e) => {
-                    if (sending) return;
-                    e.currentTarget.style.background = T.signal;
-                    e.currentTarget.style.borderColor = T.signal;
-                    e.currentTarget.style.color = T.signalContrast;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.borderColor = sent ? T.signal : T.textPrimary;
-                    e.currentTarget.style.color = sent ? T.signal : T.textPrimary;
-                  }}
-                >
-                  {sending ? "Sending..." : sent ? "Message sent!" : error ? "Failed — try again" : "Submit"}
-                </button>
-                <p className="min-h-6 text-sm" aria-live="polite" style={{ color: error ? "#E5484D" : T.textSecondary }}>
-                  {sent && "Thanks — your message has been sent."}
-                  {error && "Your message could not be sent. Please email me directly instead."}
-                </p>
-              </form>
+            <div className="jm-contact-scene">
+              <figure className="jm-contact-polaroid jm-contact-polaroid-left">
+                <img
+                  src="/images/contact-field.jpg"
+                  alt="A person standing in a sunlit field"
+                  loading="lazy"
+                />
+                <figcaption>random shot</figcaption>
+              </figure>
 
-              <div className="flex flex-col gap-5">
-                <BracketFrame className="flex-1 min-h-[220px] overflow-hidden">
-                  <iframe src="/Joey_Miral_AI_Application_Developer.pdf" title="Joey Miral CV" className="w-full h-full min-h-[220px]" />
-                </BracketFrame>
-                <a
-                  href="/Joey_Miral_AI_Application_Developer.pdf"
-                  download="Joey_Miral_AI_Application_Developer.pdf"
-                  className="py-3 text-center transition-colors duration-200"
-                  style={{ fontFamily: FONT_MONO, fontSize: 13, border: `1px solid ${T.line}`, color: T.textPrimary }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = T.signal)}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = T.line)}
-                >
-                  Download CV
-                </a>
+              <div className="jm-contact-center">
+                <form className="jm-contact-form" onSubmit={handleContactSubmit}>
+                  <p className="jm-contact-form-intro">
+                    Got a project, a hard problem, or just want to say hi? Send it over. I read every message.
+                  </p>
 
-                <div style={{ border: `1px dashed ${T.line}`, padding: 24, fontFamily: FONT_MONO, fontSize: 13, color: T.textSecondary }}>
-                  <div className="flex justify-between py-2" style={{ borderBottom: `1px solid ${T.lineSoft}` }}>
-                    <span>EMAIL</span>
-                    <span style={{ color: T.textPrimary }}>miraljoey291@gmail.com</span>
-                  </div>
-                  <div className="flex justify-between py-2" style={{ borderBottom: `1px solid ${T.lineSoft}` }}>
-                    <span>PHONE</span>
-                    <span style={{ color: T.textPrimary }}>+63 947 803 7720</span>
-                  </div>
-                  <div className="flex justify-between py-2">
-                    <span>LOCATION</span>
-                    <span style={{ color: T.textPrimary }}>Pasay City, PH</span>
+                  {contactStep === 1 ? (
+                    <>
+                      <label className="jm-contact-field">
+                        <span>MESSAGE</span>
+                        <textarea
+                          required
+                          maxLength={5000}
+                          rows={3}
+                          value={contactForm.message}
+                          onChange={(event) => updateContactField("message", event.target.value)}
+                          placeholder="Tell me what you have in mind..."
+                        />
+                      </label>
+                      <div className="jm-contact-form-actions jm-contact-form-actions-next">
+                        <button className="jm-contact-next" type="button" onClick={continueContactForm}>
+                          NEXT (1/2) <ArrowUpRight size={16} aria-hidden="true" />
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <label className="jm-contact-field">
+                        <span>NAME</span>
+                        <input
+                          required
+                          maxLength={100}
+                          autoComplete="name"
+                          value={contactForm.name}
+                          onChange={(event) => updateContactField("name", event.target.value)}
+                          placeholder="Your name"
+                        />
+                      </label>
+                      <label className="jm-contact-field">
+                        <span>EMAIL</span>
+                        <input
+                          required
+                          type="email"
+                          maxLength={254}
+                          autoComplete="email"
+                          value={contactForm.email}
+                          onChange={(event) => updateContactField("email", event.target.value)}
+                          placeholder="you@example.com"
+                        />
+                      </label>
+                      <div className="jm-contact-form-actions">
+                        <button
+                          className="jm-contact-back"
+                          type="button"
+                          aria-label="Back to message"
+                          onClick={() => {
+                            setContactStep(1);
+                            setContactStatus("idle");
+                            setContactError("");
+                          }}
+                        >
+                          ←
+                        </button>
+                        <button
+                          className="jm-contact-send"
+                          type="submit"
+                          disabled={contactStatus === "sending" || contactStatus === "success"}
+                        >
+                          {contactStatus === "sending"
+                            ? "SENDING..."
+                            : contactStatus === "success"
+                              ? "SENT ✓"
+                              : "SEND (2/2)"}
+                        </button>
+                      </div>
+                    </>
+                  )}
+
+                  {contactError && <p className="jm-contact-feedback jm-contact-error" role="alert">{contactError}</p>}
+                  {contactStatus === "success" && (
+                    <p className="jm-contact-feedback jm-contact-success" role="status">
+                      Message sent — thanks! I&apos;ll be in touch soon.
+                    </p>
+                  )}
+                </form>
+
+                <div className="jm-contact-followup">
+                  <span className="jm-handwritten">↗ Open to new work and good problems</span>
+                  <a
+                    className="jm-contact-email-link"
+                    href="mailto:miraljoey291@gmail.com?subject=Let%27s%20work%20together"
+                  >
+                    miraljoey291@gmail.com
+                  </a>
+                  <div className="jm-contact-socials">
+                    {[
+                      { label: "LinkedIn", Icon: Linkedin, href: "https://www.linkedin.com/in/joey-miral-06a89724a/" },
+                      { label: "Instagram", Icon: Instagram, href: "https://www.instagram.com/yeoj.mp3/" },
+                      { label: "Facebook", Icon: Facebook, href: "https://www.facebook.com/miraljoey/" },
+                    ].map(({ label, Icon, href }) => (
+                      <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+                        <Icon size={17} aria-hidden="true" />
+                        <span>{label}</span>
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
+
+              <figure className="jm-contact-polaroid jm-contact-polaroid-right">
+                <img
+                  src="/images/contact-setup.jpg"
+                  alt="A dimly lit desk setup with a music player, speakers, and orange ambient lighting"
+                  loading="lazy"
+                />
+                <figcaption>late night setup</figcaption>
+              </figure>
             </div>
           </section>
         </FadeInSection>
@@ -1071,39 +1008,57 @@ export default function JoeyPortfolio() {
 
       {/* FOOTER */}
       <footer
-        className="relative px-6 md:px-16 py-14 flex flex-col items-center gap-6"
-        style={{ background: T.surface, borderTop: `1px solid ${T.line}`, zIndex: 1, transition: "background-color 300ms ease" }}
+        className="jm-footer"
+        style={{ background: T.surface, borderColor: T.line, zIndex: 1 }}
       >
-        <div className="flex items-center gap-4">
-          {[
-            { Icon: Facebook, href: "https://www.facebook.com/miraljoey/" },
-            { Icon: Linkedin, href: "https://www.linkedin.com/in/joey-miral-06a89724a/" },
-            { Icon: Instagram, href: "https://www.instagram.com/yeoj.mp3/" },
-            { Icon: Mail, href: "mailto:miraljoey291@gmail.com" },
-          ].map(({ Icon, href }, i) => (
-            <a
-              key={i}
-              href={href}
-              target={href.startsWith("mailto:") ? undefined : "_blank"}
-              rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-              className="w-10 h-10 flex items-center justify-center transition-colors duration-200"
-              style={{ border: `1px solid ${T.line}`, color: T.textSecondary }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = T.signal;
-                e.currentTarget.style.color = T.signal;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = T.line;
-                e.currentTarget.style.color = T.textSecondary;
-              }}
-            >
-              <Icon size={17} aria-hidden="true" />
-            </a>
-          ))}
+        <div className="jm-footer-main">
+          <a className="jm-footer-brand" href="#top" aria-label="Joey Miral, back to top">
+            <span className="jm-footer-name" style={{ color: T.textPrimary }}>JOEY MIRAL</span>
+            <span className="jm-footer-role" style={{ color: T.textSecondary }}>
+              AI DEVELOPER <b style={{ color: T.signal }}>+</b> UI/UX DEV
+            </span>
+          </a>
+
+          <div className="jm-footer-links">
+            <nav className="jm-footer-nav" aria-label="Footer navigation">
+              {["About", "Projects", "Contact"].map((item) => (
+                <a key={item} href={`#${item.toLowerCase()}`} style={{ color: T.textPrimary }}>
+                  {item}
+                </a>
+              ))}
+            </nav>
+
+            <div className="jm-footer-socials">
+              {[
+                { label: "Facebook", Icon: Facebook, href: "https://www.facebook.com/miraljoey/", color: "#315FDB" },
+                { label: "LinkedIn", Icon: Linkedin, href: "https://www.linkedin.com/in/joey-miral-06a89724a/", color: "#F2C94C" },
+                { label: "Instagram", Icon: Instagram, href: "https://www.instagram.com/yeoj.mp3/", color: "#F34D91" },
+                { label: "Email", Icon: Mail, href: "mailto:miraljoey291@gmail.com", color: "#44D7C4" },
+              ].map(({ label, Icon, href, color }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target={href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  className="jm-footer-social"
+                  style={{ "--social-color": color }}
+                >
+                  <Icon size={18} aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-        <p style={{ fontFamily: FONT_MONO, fontSize: 11, color: T.textSecondary, letterSpacing: 0.5 }}>
-          Joey Miral · miraljoey291@gmail.com · +63 947 803 7720
-        </p>
+
+        <div className="jm-footer-bottom" style={{ borderColor: T.line }}>
+          <p style={{ color: T.textSecondary }}>
+            © {new Date().getFullYear()} Joey Miral · miraljoey291@gmail.com · +63 947 803 7720
+          </p>
+          <span className="jm-footer-made" style={{ background: T.lineSoft, color: T.textPrimary }}>
+            ✦ MADE WITH INTENTION
+          </span>
+        </div>
       </footer>
 
       <style>{`
