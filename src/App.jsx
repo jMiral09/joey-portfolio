@@ -132,8 +132,8 @@ const featuredProjects = [
   {
     name: "Calendar Agent",
     category: "AI / FULL-STACK",
-    image: "/images/calendar_agent_thumbnail.webp",
-    alt: "Calendar Agent chat listing tomorrow's events from Google Calendar",
+    image: "/images/calendar_agent_updated.webp",
+    alt: "NOVA Calendar Assistant interface",
     summary: "A full-stack AI assistant that turns plain-language requests into Google Calendar events.",
     contribution: "Solo project. I designed the architecture and built the chat interface, API layer, and calendar agent with its tools.",
     process: "A React chat sends requests through a Next.js API route to a FastAPI backend. An LLM agent uses calendar tools to create events and reply with a confirmation.",
@@ -144,7 +144,7 @@ const featuredProjects = [
   {
     name: "Papertrail",
     category: "AI / DOCUMENT WORKSPACE",
-    image: "/images/papertrail-document-search.jpg",
+    image: "/images/papertrail-document-search.webp",
     alt: "Papertrail document assistant interface with a PDF library and AI chat",
     summary: "A local-first RAG workspace for uploading PDFs and asking questions grounded in their contents.",
     contribution: "Solo project. I built the Next.js chat interface, FastAPI API, durable PDF ingestion workflow, vector search, and source-display flow.",
@@ -442,6 +442,12 @@ export default function JoeyPortfolio() {
             className="relative px-6 pb-20 pt-36 md:px-16 lg:px-24 xl:px-32 md:pb-24 md:pt-44 min-h-[90vh] flex flex-col justify-between"
             style={{ borderBottom: `1px solid ${T.line}` }}
           >
+            <figure className="jm-hero-floating-photo jm-hero-floating-photo-left" aria-hidden="true">
+              <img src="/images/hero-night-portrait.webp" alt="" loading="eager" />
+            </figure>
+            <figure className="jm-hero-floating-photo jm-hero-floating-photo-right" aria-hidden="true">
+              <img src="/images/hero-closeup-portrait.webp" alt="" loading="eager" />
+            </figure>
             <div className="jm-hero-content">
               <div className="jm-hero-stickers" aria-hidden="true">
                 <span>MADE THINGS</span>
@@ -510,8 +516,8 @@ export default function JoeyPortfolio() {
 
             <div className="jm-featured-grid">
               {featuredProjects.map((project, index) => (
-                <article className="jm-featured-card" key={project.name} style={{ background: T.surface, borderColor: T.line }}>
-                  <div className="jm-featured-tab" style={{ background: T.lineSoft, color: T.textPrimary }}>
+                <article className="jm-featured-card" key={project.name}>
+                  <div className="jm-featured-tab">
                     <span>✦ PROJECT {String(index + 1).padStart(2, "0")}</span>
                     <span>{project.category}</span>
                   </div>
@@ -525,18 +531,18 @@ export default function JoeyPortfolio() {
                   </div>
 
                   <div className="jm-featured-info">
-                    <span className="jm-featured-category" style={{ color: T.signal }}>{project.category}</span>
-                    <h3 style={{ color: T.textPrimary }}>{project.name}</h3>
-                    <p style={{ color: T.textSecondary }}>{project.summary}</p>
+                    <span className="jm-featured-category">{project.category}</span>
+                    <h3>{project.name}</h3>
+                    <p>{project.summary}</p>
 
                     <div className="jm-featured-tech">
                       {project.tech.map((tech) => (
-                        <span key={tech} style={{ borderColor: T.line, color: T.textSecondary }}>{tech}</span>
+                        <span key={tech}>{tech}</span>
                       ))}
                     </div>
 
-                    <details className="jm-featured-details" style={{ borderColor: T.line }}>
-                      <summary style={{ color: T.textPrimary }}>Behind the build</summary>
+                    <details className="jm-featured-details">
+                      <summary>Behind the build</summary>
                       <div>
                         <p><strong>My contribution</strong> {project.contribution}</p>
                         <p><strong>How it works</strong> {project.process}</p>
@@ -544,10 +550,10 @@ export default function JoeyPortfolio() {
                     </details>
 
                     <div className="jm-featured-links">
-                      <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: T.textPrimary }}>
+                      <a href={project.link} target="_blank" rel="noopener noreferrer">
                         {project.cta} <ArrowUpRight size={16} aria-hidden="true" />
                       </a>
-                      <a href="#contact" style={{ color: T.textSecondary }}>Ask me about it</a>
+                      <a href="#contact">Ask me about it</a>
                     </div>
                   </div>
                 </article>
@@ -877,7 +883,7 @@ export default function JoeyPortfolio() {
             <div className="jm-contact-scene">
               <figure className="jm-contact-polaroid jm-contact-polaroid-left">
                 <img
-                  src="/images/contact-field.jpg"
+                  src="/images/contact-field.webp"
                   alt="A person standing in a sunlit field"
                   loading="lazy"
                 />
@@ -995,8 +1001,8 @@ export default function JoeyPortfolio() {
 
               <figure className="jm-contact-polaroid jm-contact-polaroid-right">
                 <img
-                  src="/images/contact-setup.jpg"
-                  alt="A dimly lit desk setup with a music player, speakers, and orange ambient lighting"
+                  src="/images/contact-nightdesk.webp"
+                  alt="A dimly lit desk and monitor setup in a purple and red workspace"
                   loading="lazy"
                 />
                 <figcaption>late night setup</figcaption>
